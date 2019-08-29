@@ -5,9 +5,9 @@
 * File Name: security.h
     Header file for an implementation of a security object
     Objects contain information representing
-      - stock symbol
-      - current share value
-      - number of current holdings
+      -   stock symbol
+      -   current share value
+      -   number of current holdings
 * To build:   g++ hw1.cpp
 * To execute: ./a.out
 */

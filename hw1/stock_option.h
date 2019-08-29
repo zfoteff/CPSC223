@@ -1,3 +1,19 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: stock_option.h
+    Header file for an implementation of a stock option object
+    Objects contain information representing
+      -   stock symbol
+      -   current share value
+      -   number of current holdings
+      -   purchase price
+      -   strike price
+* To build:   g++ hw1.cpp
+* To execute: ./a.out
+*/
+
 #ifndef STOCK_OPTION_H
 #define STOCK_OPTION_H
 
