@@ -1,11 +1,13 @@
 #include <iostream>
 #include <string>
-#include "security.h"
+#include "stock.cpp"
+#include "security.cpp"
+#include "stock_option.cpp"
 using namespace std;
 
 int main()
 {
-  Security test = Security("ZAC", 100.0, 1);
+  StockOption test = StockOption();
 
   return 0;
 }
