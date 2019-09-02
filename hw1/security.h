@@ -8,8 +8,6 @@
       -   stock symbol
       -   current share value
       -   number of current holdings
-* To build:   g++ hw1.cpp
-* To execute: ./a.out
 */
 
 #ifndef SECURITY_H
@@ -21,7 +19,7 @@ class Security
 {
   public:
     Security();   // Constructor
-  
+
     //  Assigns value to private member variable stock_symbol
     void set_symbol(std::string symb);
 

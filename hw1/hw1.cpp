@@ -5,7 +5,7 @@
 * File Name: hw1.cpp
     This program builds instances of Security, Stock, and StockOption class
     objects and tests each of their values and methods with the assert statement
-* To build:   g++ hw1.cpp
+* To build: g++ -g -Wall security.cpp stock.cpp stock_option.cpp hw1.cpp -o -hw1
 * To execute: ./a.out
 */
 

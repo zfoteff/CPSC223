@@ -10,8 +10,6 @@
       -   number of current holdings
       -   purchase price
       -   strike price
-* To build:   g++ hw1.cpp
-* To execute: ./a.out
 */
 
 #ifndef STOCK_OPTION_H
