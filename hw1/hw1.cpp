@@ -11,9 +11,9 @@
 
 #include <assert.h>
 #include <iostream>
-#include "security.cpp"
-#include "stock.cpp"
-#include "stock_option.cpp"
+#include "security.h"
+#include "stock.h"
+#include "stock_option.h"
 
 using namespace std;
 

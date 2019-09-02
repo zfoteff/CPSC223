@@ -22,13 +22,6 @@ Security::Security()
   number_of_holdings = 0;
 }
 
-Security::Security(std::string symbol, double value, int holdings)
-{
-  stock_symbol = symbol;
-  share_value = value;
-  number_of_holdings = holdings;
-}
-
 void Security::set_symbol(std::string symb)
 {
   stock_symbol = symb;

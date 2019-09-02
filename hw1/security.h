@@ -21,8 +21,7 @@ class Security
 {
   public:
     Security();   // Constructor
-    Security(std::string symbol, double value, int holdings); // Custom Constructor
-
+  
     //  Assigns value to private member variable stock_symbol
     void set_symbol(std::string symb);
 
