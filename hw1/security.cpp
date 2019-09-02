@@ -14,7 +14,6 @@
 
 #include "security.h"
 #include <iostream>
-#include <string>
 using namespace std;
 
 Security::Security()
@@ -24,7 +23,7 @@ Security::Security()
   number_of_holdings = 0;
 }
 
-Security::Security(string symbol, double value, int holdings)
+Security::Security(std::string symbol, double value, int holdings)
 {
   stock_symbol = symbol;
   share_value = value;
@@ -34,6 +33,11 @@ Security::Security(string symbol, double value, int holdings)
 void Security::set_symbol(string symb)
 {
   stock_symbol = symb;
+}
+
+std::string Security::get_symbol() const
+{
+  return stock_symbol;
 }
 
 void Security::set_share_value(double new_value)
@@ -58,5 +62,5 @@ int Security::get_holdings() const
 
 double Security::market_value() const
 {
-  return 0;//(get_holdings() * get_share_value());
+  return get_share_value() * get_holdings();
 }

@@ -30,11 +30,12 @@ public:
   void set_strike_price(double price);
 
   //  Retrieves strike price
-  double get_strike_price();
+  double get_strike_price() const;
 
   //  Calculates net worth of a stock option
-  //  net worth = (current price - strike price)
-  double sell_value();
+  //  net worth =
+  //  (strike price - purchase price)*holdings - share value * holdings
+  double sell_value() const;
 
 private:
   double strike_price;

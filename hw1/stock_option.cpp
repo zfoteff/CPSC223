@@ -17,12 +17,12 @@ void StockOption::set_strike_price(double price)
   strike_price = price;
 }
 
-double StockOption::get_strike_price()
+double StockOption::get_strike_price() const
 {
   return strike_price;
 }
 
-double StockOption::sell_value()
+double StockOption::sell_value() const
 {
-  return (get_share_value() - get_strike_price());
+  return (get_strike_price() - get_purchase_price()) * get_holdings() - get_share_value()*get_holdings();
 }

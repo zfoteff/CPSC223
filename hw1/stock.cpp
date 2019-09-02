@@ -1,6 +1,5 @@
 #include "stock.h"
 #include <iostream>
-#include <string>
 using namespace std;
 
 Stock::Stock() : Security()
@@ -24,6 +23,5 @@ double Stock::get_purchase_price() const
 
 double Stock::sell_value() const
 {
-  double price_of_stock = get_share_value();
-  return (price_of_stock/get_share_value());
+  return (get_share_value() - get_purchase_price()) * get_holdings();
 }

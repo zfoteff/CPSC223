@@ -14,17 +14,19 @@
 
 #ifndef SECURITY_H
 #define SECURITY_H
-#include <string>
 using namespace std;
 
 class Security
 {
   public:
     Security();   // Constructor
-    Security(string symbol, double value, int holdings); // Custom Constructor
+    Security(std::string symbol, double value, int holdings); // Custom Constructor
 
     //  Assigns value to private member variable stock_symbol
     void set_symbol(string symb);
+
+    // Retrieves security indentification symbol
+    std::string get_symbol() const;
 
     //  Assigns value to private member variable share_value
     void set_share_value(double new_value);
@@ -42,7 +44,7 @@ class Security
     double market_value() const;
 
   private:
-    string stock_symbol;
+    std::string stock_symbol;
     double share_value;
     int number_of_holdings;
 };
