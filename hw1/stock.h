@@ -16,8 +16,8 @@
 #ifndef STOCK_H
 #define STOCK_H
 
+#include <string>
 #include "security.h"
-using namespace std;
 
 class Stock : public Security
 {

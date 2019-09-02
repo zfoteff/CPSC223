@@ -14,7 +14,8 @@
 
 #ifndef SECURITY_H
 #define SECURITY_H
-using namespace std;
+
+#include <string>
 
 class Security
 {
@@ -23,7 +24,7 @@ class Security
     Security(std::string symbol, double value, int holdings); // Custom Constructor
 
     //  Assigns value to private member variable stock_symbol
-    void set_symbol(string symb);
+    void set_symbol(std::string symb);
 
     // Retrieves security indentification symbol
     std::string get_symbol() const;

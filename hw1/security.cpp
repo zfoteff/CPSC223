@@ -13,8 +13,7 @@
 */
 
 #include "security.h"
-#include <iostream>
-using namespace std;
+#include <string>
 
 Security::Security()
 {
@@ -30,7 +29,7 @@ Security::Security(std::string symbol, double value, int holdings)
   number_of_holdings = holdings;
 }
 
-void Security::set_symbol(string symb)
+void Security::set_symbol(std::string symb)
 {
   stock_symbol = symb;
 }

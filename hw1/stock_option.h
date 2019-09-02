@@ -19,7 +19,6 @@
 
 #include "stock.h"
 #include <string>
-using namespace std;
 
 class StockOption : public Stock
 {
