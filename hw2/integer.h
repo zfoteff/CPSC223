@@ -51,7 +51,7 @@ private:
 
   //  private helpers
   digit_list add(const digit_list& lhs, const digit_list& rhs) const;
-  digit_list add(const digit_list& lhs, const digit_list& rhs) const;
+  digit_list sub(const digit_list& lhs, const digit_list& rhs) const;
 
   //  private helper to see if lhs is less than the rhs
   bool less_than(const digit_list& lhs, const digit_list& rhs) const;
