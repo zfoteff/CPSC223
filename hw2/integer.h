@@ -1,3 +1,17 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: integer.h
+    Header file for Integer class object
+    Objects contain information representing
+      - vector containing digits of integer
+      - boolean for representing/handling a negative number
+* To build:   g++ hw2.cpp
+* To execute: ./a.out
+*/
+
+
 #ifndef INTEGER_H
 #define INTEGER_H
 
@@ -27,9 +41,6 @@ public:
   //  less than
   bool operator<(const Integer& rhs) const;
 
-  //  equal to
-  bool operator=(const Integer& rhs) const;
-
   //  greater than
   bool operator>(const Integer& rhs) const;
 
@@ -42,8 +53,12 @@ public:
   // comparison operator
   bool operator==(const Integer& rhs) const;
 
+  //  negation operator
+  bool operator!=(const Integer& rhs) const;
+
   //  output an Integer to ostream
   friend std::ostream& operator<<(std::ostream& out, const Integer& val);
+
 
 private:
   digit_list digits;  // least significant digit first
