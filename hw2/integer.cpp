@@ -167,6 +167,7 @@ digit_list Integer::add(const digit_list& lhs, const digit_list& rhs) const
     carry = sum % 10;
     new_digit = sum - (carry*10);
 
+    std::cout<<new_digit;
     new_expression.push_back(new_digit);
   }
 
@@ -181,23 +182,41 @@ digit_list Integer::sub(const digit_list& lhs, const digit_list& rhs) const
   digit_list new_expression;
   unsigned int i;
   int length;
+  std::vector<int> new_lhs = lhs;
+  std::vector<int> new_rhs = rhs;
 
   if (lhs.size() > rhs.size())
-    length = rhs.size();
-  else
-    length = lhs.size();
-
-  for (i = 0; i < length; ++i)
   {
-    int sum;
+    length = rhs.size();
+    while(new_rhs.size() < length)
+      new_rhs.push_back(0);
+  }
+
+  else
+  {
+    length = lhs.size();
+    while(new_lhs.size() < length)
+      new_lhs.push_back(0);
+  }
+
+  for(i = 0; i < length; ++i)
+  {
     int borrow = 0;
+    int new_digit;
 
-    if (rhs.at(i) > lhs.at(i))
+    if (new_rhs.at(i) > new_lhs.at(i))
+    {
+      int counter = 1;
+      while(new_lhs.at(i+counter) == 0)
+        counter++;
+
+      new_lhs.at(i+counter) -= 1;
       borrow += 1;
+    }
 
-    sum = (lhs.at(i) + borrow*10) - rhs.at(i);
-
-    new_expression.push_back(sum);
+    new_digit = ((new_lhs.at(i) + borrow*10) - new_rhs.at(i));
+    std::cout<<new_digit;
+    new_expression.push_back(new_digit);
   }
 
   return new_expression;
@@ -233,6 +252,10 @@ bool Integer::less_than(const digit_list& lhs, const digit_list& rhs) const
 std::ostream& operator<<(std::ostream& out, const Integer& val)
 {
   unsigned int i;
+
+  if (val.negative == true)
+    out<<"-";
+
   for(i = (val.digits.size()-1); i > 0; --i)
     out<<val.digits.at(i);
 
