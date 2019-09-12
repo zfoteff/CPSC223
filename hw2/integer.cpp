@@ -67,7 +67,7 @@ Integer Integer::operator-() const
 Integer Integer::operator+(const Integer& rhs) const
 {
   Integer tmp;
-  tmp.digits = add(digits, rhs.digits);
+  tmp.digits = add(this->digits, rhs.digits);
   tmp.negative = false;
   return tmp;
 }
@@ -75,7 +75,7 @@ Integer Integer::operator+(const Integer& rhs) const
 Integer Integer::operator-(const Integer& rhs) const
 {
   Integer tmp;
-  //tmp.digits = this->sub(rhs);
+  tmp.digits = sub(this->digits, rhs.digits);
   tmp.negative = false;
   return tmp;
 }
