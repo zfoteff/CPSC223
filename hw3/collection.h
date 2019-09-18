@@ -18,13 +18,13 @@ public:
   virtual bool find(const K& key, V& val) const = 0;
 
   //  Find and return a list of keys with values >= k1 and <= k2
-  virtual void find(const K& k1, const K& k2, std::std::vector<K>& keys) const = 0;
+  virtual void find(const K& k1, const K& k2, std::vector<K>& keys) const = 0;
 
   //  Return all the keys in the collection
-  virtual void keys(std::std::vector<K>& keys) const = 0;
+  virtual void keys(std::vector<K>& keys) const = 0;
 
   //  Returns all the keys in ascending (sorted order)
-  virtual void sort(std::std::vector<K>& keys) const = 0;
+  virtual void sort(std::vector<K>& keys) const = 0;
 
   //  Returns the number of keys in the Collection
   virtual int size() const = 0;
