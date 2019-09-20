@@ -1,4 +1,4 @@
-ls#ifndef COLLECTION_H
+#ifndef COLLECTION_H
 #define COLLECTION_H
 
 #include <vector>
