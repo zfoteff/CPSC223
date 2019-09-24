@@ -31,23 +31,23 @@ private:
 template<typename K, typename V>
 void VectorCollection<K, V>::insert(const K& key, const V& val)
 {
-  std::pair<K, V> p(key, value);
+  std::pair<K, V> p(key, val);
   kv_list.push_back(p);
 }
 
 
 template<typename K, typename V>
-void VectorCollection::remove(const K& key)
+void VectorCollection<K, V>::remove(const K& key)
 {
   for(int i = 0; i < kv_list.size(); ++i)
   {
     if (kv_list[i].first == key)
-      kv_list[i].erase();
+      kv_list.erase(kv_list.begin() + i);
   }
 }
 
 template<typename K, typename V>
-bool VectorCollection::find(const K& key, const V& val) const
+bool VectorCollection<K, V>::find(const K& key, V& val) const
 {
   bool r = false;
 
@@ -65,17 +65,17 @@ bool VectorCollection::find(const K& key, const V& val) const
 }
 
 template<typename K, typename V>
-void VectorCollection::find(const K& k1, const K& k2, std::vector<K>& keys) const
+void VectorCollection<K, V>::find(const K& k1, const K& k2, std::vector<K>& keys) const
 {
   for(int i = 0; i < kv_list.size(); ++i)
   {
-    if (kv_list[i].second >= k1.second || kv_list[i].second <= k2.value)
+    if (kv_list[i].first >= k1 && kv_list[i].first <= k2)
       keys.push_back(kv_list[i].first);
   }
 }
 
 template<typename K, typename V>
-void VectorCollection::keys(std::vector<K>& keys) const
+void VectorCollection<K, V>::keys(std::vector<K>& keys) const
 {
   for (int i = 0; i < kv_list.size(); ++i)
   {
@@ -84,31 +84,13 @@ void VectorCollection::keys(std::vector<K>& keys) const
 }
 
 template<typename K, typename V>
-void VectorCollection::sort(std::vector<K>& keys) const
+void VectorCollection<K, V>::sort(std::vector<K>& keys) const
 {
-  //  uses altered implementation of a selection sort
-  int i;
-  int j,
-  int min_idx;
-  K dummy;
-
-  for (i = 0; i < keys.size() - 1; ++i)
-  {
-    min_idx = i;
-    for (j = 0; j < keys.size(); ++j)
-    {
-      if (keys[j] < keys[min_idx])
-        min_idx = j;
-    }
-
-    dummy = keys[i];
-    keys[i] = keys[min_idx];
-    keys[min_idx] = dummy;
-  }
+  std::sort(keys.begin(), keys.end());
 }
 
 template<typename K, typename V>
-int VectorCollection::size()
+int VectorCollection<K, V>::size() const
 {
   unsigned int i;
 

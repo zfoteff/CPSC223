@@ -34,7 +34,7 @@ TEST(BasicCollectionTest, InsertAndFind)
 //  Test 3
 TEST(BasicCollectionTest, RemoveElems)
 {
-  VectorCollection<sring, double> c;
+  VectorCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
   c.insert("c", 30.0);
