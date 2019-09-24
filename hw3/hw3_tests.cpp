@@ -105,17 +105,25 @@ TEST(BasicCollectionTest, KeySort)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-/*
-//  Custom Test 7
-TEST(BasicCollectionTest, CorrectValues)
+//  Custom Test 7 - tests that if an element is inserted and the Collection
+//                  is resorted, the elements will be placed in the correct
+//                  order
+TEST(BasicCollectionTest, InsertAndSort)
 {
   VectorCollection<string, double> c;
   c.insert("a", 10.0);
+  c.insert("d", 40.0);
   c.insert("b", 20.0);
+  vector<string> sorted_ks;
+  c.sort(sorted_ks);
+  for(int i =0; i < int(sorted_ks.size()) - 1; ++i)
+    ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
   c.insert("c", 30.0);
-
+  c.sort(sorted_ks);
+  for(int i =0; i < int(sorted_ks.size()) - 1; ++i)
+    ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
-*/
+
 int main(int argc, char** argv)
 {
   testing::InitGoogleTest(&argc, argv);

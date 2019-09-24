@@ -65,7 +65,8 @@ bool VectorCollection<K, V>::find(const K& key, V& val) const
 }
 
 template<typename K, typename V>
-void VectorCollection<K, V>::find(const K& k1, const K& k2, std::vector<K>& keys) const
+void VectorCollection<K, V>
+::find(const K& k1, const K& k2, std::vector<K>& keys) const
 {
   for(int i = 0; i < kv_list.size(); ++i)
   {
