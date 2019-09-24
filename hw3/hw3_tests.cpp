@@ -105,6 +105,17 @@ TEST(BasicCollectionTest, KeySort)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
+/*
+//  Custom Test 7
+TEST(BasicCollectionTest, CorrectValues)
+{
+  VectorCollection<string, double> c;
+  c.insert("a", 10.0);
+  c.insert("b", 20.0);
+  c.insert("c", 30.0);
+
+}
+*/
 int main(int argc, char** argv)
 {
   testing::InitGoogleTest(&argc, argv);
