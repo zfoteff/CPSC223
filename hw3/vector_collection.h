@@ -87,7 +87,7 @@ void VectorCollection<K, V>::keys(std::vector<K>& keys) const
 template<typename K, typename V>
 void VectorCollection<K, V>::sort(std::vector<K>& keys) const
 {
-  std::sort(keys.begin(), keys.end());
+  keys = std::sort(keys.begin(), keys.end());
 }
 
 template<typename K, typename V>
