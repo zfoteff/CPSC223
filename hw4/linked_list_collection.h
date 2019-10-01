@@ -79,7 +79,7 @@ LinkedListCollection<K, V>
 }
 
 template<typename K, typename V>
-LinkedListCollection::~LinkedListCollection()
+LinkedListCollection<K, V>::~LinkedListCollection()
 {
   Node* cur = head;
   while (cur->next != nullptr)
@@ -93,7 +93,7 @@ LinkedListCollection::~LinkedListCollection()
 }
 
 template<typename K, typename V>
-void LinkedListCollection::(const K& key, const V& val)
+void LinkedListCollection<K, V>::insert(const K& key, const V& val)
 {
   Node* new_insert = new Node;
   new_insert->key = key;
@@ -113,3 +113,88 @@ void LinkedListCollection::(const K& key, const V& val)
   tail = new_insert;
   length++;
 }
+
+template<typename K, typename V>
+void LinkedListCollection<K, V>::remove(const K& key)
+{
+  Node* last = new Node;
+  Node* cur = head;
+
+  if (length == 1)
+  {
+    delete head;
+    return;
+  }
+
+  for(int i = 0; cur->next != nullptr; ++i)
+  {
+    if (cur->key == key)
+    {
+      last->next = cur->next;
+      delete cur;
+    }
+
+    last = cur;
+    cur = cur->next;
+  }
+}
+
+template<typename K, typename V>
+bool LinkedListCollection<K, V>::find(const K& key, V& val) const
+{
+  bool r = false;
+
+  for(int i = 0; cur->next != nullptr; ++i)
+  {
+    if(cur->key == key)
+    {
+      r = true;
+      val = cur->value;
+      break;
+    }
+  }
+
+  return r;
+}
+
+template<typename K, typename V>
+void LinkedListCollection<K, V>
+::find(const K& k1, const K& k2, std::vector<K>& keys) const
+{
+  for(int i = 0; cur->next != nullptr; ++i)
+  {
+    if (cur->key >= k1 && cur->key <= k2)
+    {
+      keys.push_back(cur->key);
+    }
+
+    cur = cur->next;
+  }
+}
+
+template<typename K, typename V>
+void LinkedListCollection<K, V>::sort(std::vector<K>& keys) const
+{
+  Node* cur = head;
+  while (cur != nullptr)
+  {
+    keys.push_back(cur->key);
+    cur = cur->next;
+  }
+
+  std::sort(keys.begin(), keys.end());
+}
+
+template<typename K, typename V>
+int LinkedListCollection<K, V>::size() const
+{
+  unsigned int i;
+  for(i = 0; cur->next; ++i)
+  {
+    cur = cur->next;
+  }
+
+  return i;
+}
+
+#endif
