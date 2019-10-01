@@ -38,6 +38,9 @@ public:
   //  Return all keys in the Collection
   void keys(std::vector<K>& keys) const;
 
+  //  Sorts the collection and passes the sorted list as a vector
+  void sort(std::vector<K>& keys) const;
+
   //  Return the number of keys in the Collection
   int size() const;
 
@@ -97,7 +100,7 @@ void LinkedListCollection<K, V>::insert(const K& key, const V& val)
 {
   Node* new_insert = new Node;
   new_insert->key = key;
-  new_insert->value = value;
+  new_insert->value = val;
 
   if (length == 0)
   {
@@ -143,6 +146,7 @@ template<typename K, typename V>
 bool LinkedListCollection<K, V>::find(const K& key, V& val) const
 {
   bool r = false;
+  Node* cur = head;
 
   for(int i = 0; cur->next != nullptr; ++i)
   {
@@ -161,6 +165,8 @@ template<typename K, typename V>
 void LinkedListCollection<K, V>
 ::find(const K& k1, const K& k2, std::vector<K>& keys) const
 {
+  Node* cur = head;
+
   for(int i = 0; cur->next != nullptr; ++i)
   {
     if (cur->key >= k1 && cur->key <= k2)
@@ -189,6 +195,7 @@ template<typename K, typename V>
 int LinkedListCollection<K, V>::size() const
 {
   unsigned int i;
+  Node* cur = head;
   for(i = 0; cur->next; ++i)
   {
     cur = cur->next;
