@@ -56,6 +56,7 @@ private:
   int length;
 };
 
+
 template<typename K, typename V>
 LinkedListCollection<K, V>::LinkedListCollection()
 {
@@ -63,6 +64,7 @@ LinkedListCollection<K, V>::LinkedListCollection()
   tail = nullptr;
   length = 0;
 }
+
 
 template<typename K, typename V>
 LinkedListCollection<K, V>::
@@ -75,6 +77,7 @@ LinkedListCollection(const LinkedListCollection<K, V>& rhs)
     cur = cur->next;
   }
 }
+
 
 template<typename K, typename V>
 LinkedListCollection<K, V>& LinkedListCollection<K, V>
@@ -102,6 +105,7 @@ LinkedListCollection<K, V>& LinkedListCollection<K, V>
   return *this;
 }
 
+
 template<typename K, typename V>
 LinkedListCollection<K, V>::~LinkedListCollection()
 {
@@ -115,6 +119,7 @@ LinkedListCollection<K, V>::~LinkedListCollection()
 
   head = nullptr;
 }
+
 
 template<typename K, typename V>
 void LinkedListCollection<K, V>::insert(const K& key, const V& val)
@@ -138,6 +143,7 @@ void LinkedListCollection<K, V>::insert(const K& key, const V& val)
   length++;
 }
 
+
 template<typename K, typename V>
 void LinkedListCollection<K, V>::remove(const K& key)
 {
@@ -159,6 +165,7 @@ void LinkedListCollection<K, V>::remove(const K& key)
   }
 }
 
+
 template<typename K, typename V>
 bool LinkedListCollection<K, V>::find(const K& key, V& val) const
 {
@@ -177,6 +184,7 @@ bool LinkedListCollection<K, V>::find(const K& key, V& val) const
   return false;
 }
 
+
 template<typename K, typename V>
 void LinkedListCollection<K, V>
 ::find(const K& k1, const K& k2, std::vector<K>& keys) const
@@ -192,6 +200,7 @@ void LinkedListCollection<K, V>
   }
 }
 
+
 template<typename K, typename V>
 void LinkedListCollection<K, V>::keys(std::vector<K>& keys) const
 {
@@ -202,6 +211,7 @@ void LinkedListCollection<K, V>::keys(std::vector<K>& keys) const
     cur = cur->next;
   }
 }
+
 
 template<typename K, typename V>
 void LinkedListCollection<K, V>::sort(std::vector<K>& keys) const
@@ -215,6 +225,7 @@ void LinkedListCollection<K, V>::sort(std::vector<K>& keys) const
 
   std::sort(keys.begin(), keys.end());
 }
+
 
 template<typename K, typename V>
 int LinkedListCollection<K, V>::size() const

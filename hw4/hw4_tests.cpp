@@ -15,6 +15,7 @@ TEST(BasicCollectionTest, CorrectSize)
   ASSERT_EQ(c.size(), 2);
 }
 
+
 TEST(BasicCollectionTest, InsertAndFind)
 {
   LinkedListCollection<string, double> c;
@@ -28,6 +29,7 @@ TEST(BasicCollectionTest, InsertAndFind)
   ASSERT_EQ(c.find("b", v), true);
   ASSERT_EQ(v, 20.0);
 }
+
 
 TEST(BasicCollectionTest, RemoveElems)
 {
@@ -44,6 +46,7 @@ TEST(BasicCollectionTest, RemoveElems)
   ASSERT_EQ(c.find("c", v), false);
   ASSERT_EQ(c.size(), 0);
 }
+
 
 TEST(BasicCollectionTest, GetKeys)
 {
@@ -63,6 +66,7 @@ TEST(BasicCollectionTest, GetKeys)
   ASSERT_NE(iter, ks.end());
 }
 
+
 TEST(BasicCollectionTest, GetKeyRange)
 {
   LinkedListCollection<string, double> c;
@@ -79,6 +83,7 @@ TEST(BasicCollectionTest, GetKeyRange)
   ASSERT_EQ(c.find("d", v), true);
 }
 
+
 TEST(BasicCollectionTest, KeySort)
 {
   LinkedListCollection<string, double> c;
@@ -93,11 +98,6 @@ TEST(BasicCollectionTest, KeySort)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-int main(int argc, char** argv)
-{
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
 
 TEST (BasicCollectionTest, CopyConstructorTest)
 {
@@ -111,6 +111,7 @@ TEST (BasicCollectionTest, CopyConstructorTest)
   ASSERT_EQ(lhs.find("b", v), true);
   ASSERT_EQ(v, 20.0);
 }
+
 
 TEST (BasicCollectionTest, AssignementOperatorTest)
 {
@@ -127,11 +128,19 @@ TEST (BasicCollectionTest, AssignementOperatorTest)
   ASSERT_EQ(v, 30.0);
 }
 
+
 TEST (BasicCollectionTest, DestructorTest)
 {
-  LinkedListCollection<string, double>* c = new LinkedListCollection<string, double>();
+  LinkedListCollection<string, double>* c
+   = new LinkedListCollection<string, double>();
   c->insert("a", 10.0);
   c->insert("b", 20.0);
   c->insert("c", 30.0);
   delete c;
+}
+
+int main(int argc, char** argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
