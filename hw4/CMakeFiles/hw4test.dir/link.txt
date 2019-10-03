@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/hw4test.dir/hw4_tests.cpp.o  -o hw4test -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 

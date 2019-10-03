@@ -101,5 +101,4 @@ int VectorCollection<K, V>::size() const
   return i;
 }
 
-
 #endif

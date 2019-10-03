@@ -5,7 +5,6 @@
 #include <algorithm>
 #include "collection.h"
 
-
 template<typename K, typename V>
 class LinkedListCollection : public Collection<K, V>
 {
@@ -66,15 +65,11 @@ LinkedListCollection<K, V>::LinkedListCollection()
 }
 
 template<typename K, typename V>
-LinkedListCollection<K, V>
-::LinkedListCollection(const LinkedListCollection<K, V>& rhs)
+LinkedListCollection<K, V>::
+LinkedListCollection(const LinkedListCollection<K, V>& rhs)
 {
-  Node* cur = new Node;
-  cur->value = rhs->head->key;
-  cur->value = rhs->head->value;
-  cur->next = rhs->head->next;
-
-  for(int i = 0; cur != nullptr; ++i)
+  Node* cur = rhs.head;
+  while (cur != nullptr)
   {
     this->insert(cur->key, cur->value);
     cur = cur->next;
@@ -82,17 +77,43 @@ LinkedListCollection<K, V>
 }
 
 template<typename K, typename V>
+LinkedListCollection<K, V>& LinkedListCollection<K, V>
+::operator=(const LinkedListCollection<K, V>& rhs)
+{
+  if(this == &rhs)
+    return *this;
+
+  Node* temp = head;
+  while(temp->next != nullptr)
+  {
+    head = head->next;
+    delete temp;
+    temp = head;
+    length--;
+  }
+
+  temp = rhs.head;
+  while(temp != nullptr)
+  {
+    this->insert(temp->key, temp->value);
+    temp = temp->next;
+  }
+
+  return *this;
+}
+
+template<typename K, typename V>
 LinkedListCollection<K, V>::~LinkedListCollection()
 {
   Node* cur = head;
-  while (cur->next != nullptr)
+  while (cur != nullptr)
   {
-    cur = cur->next;
-    delete head;
-    head = cur;
+    Node* next = cur->next;
+    delete cur;
+    cur = next;
   }
 
-  delete cur;
+  head = nullptr;
 }
 
 template<typename K, typename V>
@@ -107,7 +128,7 @@ void LinkedListCollection<K, V>::insert(const K& key, const V& val)
     head = new_insert;
     tail = new_insert;
     new_insert->next = nullptr;
-    length++;
+    this->length++;
     return;
   }
 
@@ -123,18 +144,14 @@ void LinkedListCollection<K, V>::remove(const K& key)
   Node* last = new Node;
   Node* cur = head;
 
-  if (length == 1)
-  {
-    delete head;
-    return;
-  }
-
-  for(int i = 0; cur->next != nullptr; ++i)
+  while (cur != nullptr)
   {
     if (cur->key == key)
     {
       last->next = cur->next;
       delete cur;
+      this->length--;
+      break;
     }
 
     last = cur;
@@ -145,20 +162,19 @@ void LinkedListCollection<K, V>::remove(const K& key)
 template<typename K, typename V>
 bool LinkedListCollection<K, V>::find(const K& key, V& val) const
 {
-  bool r = false;
   Node* cur = head;
-
-  for(int i = 0; cur->next != nullptr; ++i)
+  while (cur != nullptr)
   {
     if(cur->key == key)
     {
-      r = true;
       val = cur->value;
-      break;
+      return true;
     }
+
+    cur = cur->next;
   }
 
-  return r;
+  return false;
 }
 
 template<typename K, typename V>
@@ -167,13 +183,22 @@ void LinkedListCollection<K, V>
 {
   Node* cur = head;
 
-  for(int i = 0; cur->next != nullptr; ++i)
+  while (cur != nullptr)
   {
     if (cur->key >= k1 && cur->key <= k2)
-    {
       keys.push_back(cur->key);
-    }
 
+    cur = cur->next;
+  }
+}
+
+template<typename K, typename V>
+void LinkedListCollection<K, V>::keys(std::vector<K>& keys) const
+{
+  Node* cur = head;
+  while(cur != nullptr)
+  {
+    keys.push_back(cur->key);
     cur = cur->next;
   }
 }
@@ -194,14 +219,7 @@ void LinkedListCollection<K, V>::sort(std::vector<K>& keys) const
 template<typename K, typename V>
 int LinkedListCollection<K, V>::size() const
 {
-  unsigned int i;
-  Node* cur = head;
-  for(i = 0; cur->next; ++i)
-  {
-    cur = cur->next;
-  }
-
-  return i;
+  return length;
 }
 
 #endif
