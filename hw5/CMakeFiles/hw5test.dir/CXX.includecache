@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/Documents/CPSC223/hw5/binsearch_collection.h
+vector
+-
+algorithm
+-
+collection.h
+/home/student/Documents/CPSC223/hw5/collection.h
+
+/home/student/Documents/CPSC223/hw5/collection.h
+vector
+-
+
+/home/student/Documents/CPSC223/hw5/hw5_tests.cpp
+iostream
+-
+string
+-
+gtest/gtest.h
+-
+binsearch_collection.h
+/home/student/Documents/CPSC223/hw5/binsearch_collection.h
+

@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/Documents/CPSC223/hw5/binsearch_collection.h
+vector
+-
+algorithm
+-
+collection.h
+/home/student/Documents/CPSC223/hw5/collection.h
+
+/home/student/Documents/CPSC223/hw5/collection.h
+vector
+-
+
+/home/student/Documents/CPSC223/hw5/hw5_perf.cpp
+iostream
+-
+binsearch_collection.h
+/home/student/Documents/CPSC223/hw5/binsearch_collection.h
+test_driver.h
+/home/student/Documents/CPSC223/hw5/test_driver.h
+
+/home/student/Documents/CPSC223/hw5/test_driver.h
+string
+-
+iostream
+-
+fstream
+-
+chrono
+-
+collection.h
+/home/student/Documents/CPSC223/hw5/collection.h
+
