@@ -114,8 +114,12 @@ TEST (BasicCollectionTest, BinSearchEven)
   double v;
   //  Checks that the size is evenly divisible by 2 (even number)
   ASSERT_EQ(c.size() % 2, 0);
-  //  Block checks that the element exists in the collection, it is in the
-  //  correct index, and it returns the correct value
+  /*
+    This code block checks that the element:
+      - exists in the collection
+      - it is in the correct index in the collection
+      - it returns the correct value
+  */
   ASSERT_EQ(c.find("a", v), true);
   ASSERT_EQ(k[0], "a");
   ASSERT_EQ(v, 10.0);
@@ -155,8 +159,13 @@ TEST (BasicCollectionTest, BinSearchOdd)
   double v;
   //  Checks that 2 divides the size with a remainder of 1 (odd number)
   ASSERT_EQ(c.size() % 2, 1);
-  //  Block checks that the element exists in the collection, it is in the
-  //  correct index in the collection, and it returns the correct value
+
+  /*
+    This code block checks that the element:
+      - exists in the collection
+      - it is in the correct index in the collection
+      - it returns the correct value
+  */
   ASSERT_EQ(c.find("a", v), true);
   ASSERT_EQ(k[0], "a");
   ASSERT_EQ(v, 10.0);
@@ -179,6 +188,11 @@ TEST (BasicCollectionTest, BinSearchOdd)
   ASSERT_EQ(c.find("g", v), true);
   ASSERT_EQ(k[6], "g");
   ASSERT_EQ(v, 70.0);
+
+}
+
+TEST(BasicCollectionTest, )
+{
 
 }
 
