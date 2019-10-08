@@ -43,35 +43,28 @@ private:
 template<typename K, typename V>
 bool BinSearchCollection<K, V>::binsearch(const K& key, int& index) const
 {
-  unsigned int minval = 0;
-  unsigned int maxval = kv_list.size() - 1;
-  unsigned int midpoint = (kv_list.size() / 2);
+  int minval = 0;
+  int maxval = kv_list.size() - 1;
+  int midpoint;
 
-  if (kv_list[midpoint].first == key)
+  if (kv_list.size() == 0)
+    return false;
+
+  while(minval <= maxval)
   {
-    index = midpoint;
-    return true;
-  }
-
-  while(kv_list[midpoint].first != key)
-  {
-    if (kv_list[midpoint].first > key)
-    {
-      maxval = midpoint - 1;
-      midpoint = (minval+maxval)/2;
-    }
-
-    if (kv_list[midpoint].first < key)
-    {
-      minval = midpoint+1;
-      midpoint = (minval+maxval)/2;
-    }
+    midpoint = (maxval + minval) / 2;
 
     if (kv_list[midpoint].first == key)
     {
       index = midpoint;
       return true;
     }
+
+    else if (kv_list[midpoint].first > key)
+      maxval = midpoint - 1;
+
+    else if (kv_list[midpoint].first < key)
+      minval = midpoint + 1;
   }
 
   index = midpoint;
@@ -93,7 +86,7 @@ void BinSearchCollection<K, V>::remove(const K& key)
   int rm_idx;
   bool r = binsearch(key, rm_idx);
 
-  if (r == true)
+  if (r)
     kv_list.erase(kv_list.begin()+rm_idx);
 }
 
@@ -102,6 +95,12 @@ bool BinSearchCollection<K, V>::find(const K& key, V& val) const
 {
   int val_idx;
   bool r = binsearch(key, val_idx);
+
+  if (r == false)
+  {
+    val = val_idx;
+    return false;
+  }
 
   val = kv_list[val_idx].second;
   return r;
