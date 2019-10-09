@@ -47,6 +47,7 @@ TEST(BasicCollectionTest, RemoveElems)
   ASSERT_EQ(c.size(), 0);
 }
 
+
 TEST(BasicCollectionTest, GetKeyRange)
 {
   BinSearchCollection<string, double> c;
@@ -86,9 +87,9 @@ TEST(BasicCollectionTest, GetKeys)
 TEST(BasicCollectionTest, KeySort)
 {
   BinSearchCollection<string, double> c;
-  c.insert("a", 10.0);
-  c.insert("b", 20.0);
   c.insert("c", 30.0);
+  c.insert("b", 20.0);
+  c.insert("a", 10.0);
   c.insert("d", 40.0);
   vector<string> sorted_ks;
   c.sort(sorted_ks);
@@ -191,10 +192,6 @@ TEST (BasicCollectionTest, BinSearchOdd)
 
 }
 
-TEST(BasicCollectionTest, )
-{
-
-}
 
 int main(int argc, char** argv)
 {

@@ -46,6 +46,7 @@ bool BinSearchCollection<K, V>::binsearch(const K& key, int& index) const
   int minval = 0;
   int maxval = kv_list.size() - 1;
   int midpoint;
+  bool ret = false;
 
   if (kv_list.size() == 0)
     return false;
@@ -57,7 +58,8 @@ bool BinSearchCollection<K, V>::binsearch(const K& key, int& index) const
     if (kv_list[midpoint].first == key)
     {
       index = midpoint;
-      return true;
+      ret = true;
+      break;
     }
 
     else if (kv_list[midpoint].first > key)
@@ -68,16 +70,26 @@ bool BinSearchCollection<K, V>::binsearch(const K& key, int& index) const
   }
 
   index = midpoint;
-  return false;
+  return ret;
 }
 
 template<typename K, typename V>
 void BinSearchCollection<K, V>::insert(const K& key, const V& val)
 {
   std::pair<K, V> p(key, val);
-  kv_list.push_back(p);
+  int i;
 
-  std::sort(kv_list.begin(), kv_list.end());
+  if (kv_list.size() == 0)
+  {
+    kv_list.insert(kv_list.begin(), p);
+  }
+
+  else
+  {
+    bool r = binsearch(p.first, i);
+    kv_list.insert(kv_list.begin() + i+1, p);
+  }
+
 }
 
 template<typename K, typename V>
@@ -110,8 +122,20 @@ template<typename K, typename V>
 void BinSearchCollection<K, V>
 ::find(const K& k1, const K& k2, std::vector<K>& keys) const
 {
-    return;
+    int k1_idx, k2_idx;
+    bool r1 = binsearch(k1, k1_idx);
+    bool r2 = binsearch(k2, k2_idx);
+
+    if (r1 == true && r2 == true)
+    {
+      while(k1_idx <= k2_idx)
+      {
+          keys.push_back(kv_list[k1_idx].first);
+          k1_idx++;
+      }
+    }
 }
+
 
 template<typename K, typename V>
 void BinSearchCollection<K, V>
