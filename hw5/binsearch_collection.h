@@ -1,3 +1,12 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: binsearch_collection.h
+    .h file for BinSeach class object. BinSearch extends Collection
+    and implements the Collection using a vector
+*/
+
 #ifndef BINSEARCH_COLLECTION_H
 #define BINSEARCH_COLLECTION_H
 

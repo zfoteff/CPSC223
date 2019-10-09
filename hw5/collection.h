@@ -1,3 +1,13 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: collection.h
+    Definition for abstract Collection class object 
+* To build:   g++ hw2.cpp
+* To execute: ./a.out
+*/
+
 #ifndef COLLECTION_H
 #define COLLECTION_H
 

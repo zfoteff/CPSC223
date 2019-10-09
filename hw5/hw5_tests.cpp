@@ -1,3 +1,11 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: hw5_tests.cpp
+    Test file for BinSearch collection class object
+*/
+
 #include <iostream>
 #include <string>
 #include <gtest/gtest.h>
