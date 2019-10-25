@@ -1,0 +1,4 @@
+/home/student/Documents/CPSC223/hw6/CMakeFiles/rebuild_cache.dir
+/home/student/Documents/CPSC223/hw6/CMakeFiles/edit_cache.dir
+/home/student/Documents/CPSC223/hw6/CMakeFiles/hw6test.dir
+/home/student/Documents/CPSC223/hw6/CMakeFiles/hw6sort.dir

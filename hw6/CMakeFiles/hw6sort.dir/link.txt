@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/hw6sort.dir/hw6_sort.cpp.o  -o hw6sort 

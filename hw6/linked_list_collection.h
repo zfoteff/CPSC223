@@ -44,9 +44,12 @@ public:
   int size() const;
 
   //  In place sorting
-  void insertion_sort()
+  void insertion_sort();
+  void merge_sort();
+  void quick_sort();
 
 private:
+  //  Linked list structure
   struct Node
   {
     K key;
@@ -57,9 +60,17 @@ private:
   Node* head;
   Node* tail;
   int length;
+
+  //  helper to delete linked list
+  void make_empty();
+  //  merge sort Helper
+  Node* merge_sort(Node* left, int len);
+  //  quick sort HelperLinkedList key-value pair collection
+  Node* quick_sort(Node* start, int len);
 };
 
 
+//  Constructor for a LinkedList key-value pair collection
 template<typename K, typename V>
 LinkedListCollection<K, V>::LinkedListCollection()
 {
@@ -69,6 +80,7 @@ LinkedListCollection<K, V>::LinkedListCollection()
 }
 
 
+//  Copy Constructor for LinkedList key-value pair collection
 template<typename K, typename V>
 LinkedListCollection<K, V>::
 LinkedListCollection(const LinkedListCollection<K, V>& rhs)
@@ -82,23 +94,18 @@ LinkedListCollection(const LinkedListCollection<K, V>& rhs)
 }
 
 
+//  Assignment copy operator for LinkedList key-value pair collection
 template<typename K, typename V>
 LinkedListCollection<K, V>& LinkedListCollection<K, V>
 ::operator=(const LinkedListCollection<K, V>& rhs)
 {
+  std::cout<<"Here"<<std::endl;
   if(this == &rhs)
     return *this;
 
-  Node* temp = head;
-  while(temp->next != nullptr)
-  {
-    head = head->next;
-    delete temp;
-    temp = head;
-    length--;
-  }
+  delete this;
 
-  temp = rhs.head;
+  Node* temp = rhs.head;
   while(temp != nullptr)
   {
     this->insert(temp->key, temp->value);
@@ -109,6 +116,7 @@ LinkedListCollection<K, V>& LinkedListCollection<K, V>
 }
 
 
+//  Destructor for LinkedList key-value pair collection
 template<typename K, typename V>
 LinkedListCollection<K, V>::~LinkedListCollection()
 {
@@ -124,6 +132,7 @@ LinkedListCollection<K, V>::~LinkedListCollection()
 }
 
 
+//  Method inserts a new node into LinkedList key-value pair collection
 template<typename K, typename V>
 void LinkedListCollection<K, V>::insert(const K& key, const V& val)
 {
@@ -147,6 +156,7 @@ void LinkedListCollection<K, V>::insert(const K& key, const V& val)
 }
 
 
+//  Method removes specified node from the LinkedList key-value pair collection
 template<typename K, typename V>
 void LinkedListCollection<K, V>::remove(const K& key)
 {
@@ -169,6 +179,8 @@ void LinkedListCollection<K, V>::remove(const K& key)
 }
 
 
+//  Method finds a node with a specified key LinkedList key-value pair collectionand returns the value of that
+//  key by reference
 template<typename K, typename V>
 bool LinkedListCollection<K, V>::find(const K& key, V& val) const
 {
@@ -188,6 +200,8 @@ bool LinkedListCollection<K, V>::find(const K& key, V& val) const
 }
 
 
+//  Methods finds all nodes in the range [k1, k2] and returns a vector of keys
+//  by reference
 template<typename K, typename V>
 void LinkedListCollection<K, V>
 ::find(const K& k1, const K& k2, std::vector<K>& keys) const
@@ -204,6 +218,8 @@ void LinkedListCollection<K, V>
 }
 
 
+//  Method finds all the keys in the LinkedList key-value pair collection and
+//  returns a vector of the keys by reference
 template<typename K, typename V>
 void LinkedListCollection<K, V>::keys(std::vector<K>& keys) const
 {
@@ -216,6 +232,8 @@ void LinkedListCollection<K, V>::keys(std::vector<K>& keys) const
 }
 
 
+//  Methods sorts all of keys in the list and returns a vector of the keys
+//  by reference
 template<typename K, typename V>
 void LinkedListCollection<K, V>::sort(std::vector<K>& keys) const
 {
@@ -230,10 +248,213 @@ void LinkedListCollection<K, V>::sort(std::vector<K>& keys) const
 }
 
 
+//  Method returns an int representing the size of the array
 template<typename K, typename V>
 int LinkedListCollection<K, V>::size() const
 {
   return length;
+}
+
+
+//  In place insertion sort for linked lists
+template<typename K, typename V>
+void LinkedListCollection<K, V>::insertion_sort()
+{
+  Node* sortStart = head;
+  Node* sortEnd = head;
+  Node* cur = sortEnd->next;
+  Node* iter;
+  Node* iterTail;
+  Node* temp;
+
+  if (sortStart == sortEnd)
+  {
+    /*
+    When the list is first passed it, this case creates a 2 element sorted
+    region that can be iterated through easily with a while loop
+    */
+    iter = cur->next;
+
+    if (sortStart->value >= cur->value)
+    {
+      cur->next = sortStart;
+      sortStart = cur;
+      iter = iter;
+    }
+
+    else
+      sortEnd = cur;
+
+    sortStart->next = sortEnd;
+    cur = iter;
+    head = sortStart;
+  }
+
+  while (cur != nullptr)
+  {
+    iter = sortStart;               //  starts at first element of sorted region
+    temp = cur->next;               //  stores cur->next for next iteration
+
+    while (iter != sortEnd)
+    {
+      if (iter->value >= cur->value)
+      {
+        while (iterTail != iter)
+          iterTail = iterTail->next;//  set iterTail->next = iter for easy swaps
+
+        sortEnd->next = cur->next;  //  gets next cur value ready
+        cur->next = iter;           //  since iter > cur it becomes cur->next
+        iterTail->next = cur;       //  sets iterTail to cur to finish insertion
+        break;
+      }
+
+      iter = iter->next;
+    }
+
+    /*
+      if the last sorted element and the final element need to be swapped this
+      case handles it
+    */
+    if (sortEnd->value >= cur->value)
+    {
+      while (iter != sortEnd)
+        iter = iter->next;
+
+      cur->next = sortEnd;
+      iter->next = cur;
+    }
+
+    cur = temp;
+  }
+}
+
+
+//  Helper function for merging lists together
+template<typename K, typename V>
+typename LinkedListCollection<K, V>::Node*
+LinkedListCollection<K, V>::merge_sort(Node* left, int len)
+{
+  //  Split Lists
+
+  Node* newHead = nullptr;
+  Node* right;
+
+  if (this->head == nullptr)
+    return left;
+
+  if (len == 1)
+    return left;
+
+  int mid = len/2;
+  int counter = 0;
+
+  while (counter < mid)
+    left = left->next;
+
+  right = left->next;
+  left->next = nullptr;
+
+  left = merge_sort(left, mid);
+  right = merge_sort(right, len-mid);
+
+  //  merging lists
+  if (left->value <= right->value)
+  {
+    if (newHead == nullptr)
+    {
+      newHead = left;
+      newHead->next = right;
+    }
+  }
+
+  if (right->value <= left->value)
+  {
+    if (newHead == nullptr)
+    {
+      newHead = right;
+      newHead->next = left;
+    }
+  }
+
+  return newHead;
+}
+
+
+//  In place merge sort method for linked lists
+template<typename K, typename V>
+void LinkedListCollection<K, V>::merge_sort()
+{
+  head = merge_sort(this->head, this->length);
+}
+
+
+//  Helper function for quick sort method
+template<typename K, typename V>
+typename LinkedListCollection<K, V>::Node*
+LinkedListCollection<K, V>::quick_sort(Node* start, int len)
+{
+  int counter = 0;
+  int mid = len/2;
+  Node* lhs = nullptr;
+  Node* rhs = nullptr;
+  Node* lhsTail = nullptr;
+  Node* pivot = start;
+  Node* cur = start;
+
+  //  Base case
+  if (start->next == nullptr)
+  {
+    return start;
+  }
+
+  //  places nodes into correct lists
+  while(cur != nullptr)
+  {
+    if (cur->value < pivot->value)
+    {
+      if (lhs == nullptr)
+      {
+        lhs = cur;
+        continue;
+      }
+
+      lhs->next = cur;
+    }
+
+    if (cur->value > pivot->value)
+    {
+      if (rhs == nullptr)
+      {
+        rhs = cur;
+        continue;
+      }
+
+      rhs->next = cur;
+    }
+  }
+
+  lhs = quick_sort(lhs, mid);
+  rhs = quick_sort(rhs, len-mid);
+
+  //  reconnect lists
+  cur = lhs;
+
+  while (cur != nullptr)
+    cur = cur->next;
+
+  lhsTail = cur;
+  pivot->next = rhs;
+  lhsTail->next = pivot;
+
+  return lhs;
+}
+
+
+//  In place quick sort for linked lists
+template<typename K, typename V>
+void LinkedListCollection<K, V>::quick_sort()
+{
+  head = quick_sort(this->head, this->length);
 }
 
 #endif

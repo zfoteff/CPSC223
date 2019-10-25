@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/Documents/CPSC223/hw6/collection.h
+vector
+-
+
+/home/student/Documents/CPSC223/hw6/hw6_sort.cpp
+iostream
+-
+fstream
+-
+string
+-
+chrono
+-
+cassert
+-
+linked_list_collection.h
+/home/student/Documents/CPSC223/hw6/linked_list_collection.h
+
+/home/student/Documents/CPSC223/hw6/linked_list_collection.h
+vector
+-
+algorithm
+-
+collection.h
+/home/student/Documents/CPSC223/hw6/collection.h
+
