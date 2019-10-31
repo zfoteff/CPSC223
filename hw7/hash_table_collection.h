@@ -84,16 +84,19 @@ collection_size(0), table_capacity(16), load_factor_threshold(0.75)
 template <typename K, typename V>
 void HashTableCollection<K, V>::make_empty()
 {
-  //  make sure hash table exists
-  while (hash_table != nullptr)
+  for (int i = 0; i < table_capacity; ++i)
   {
-
-
-    //  Remove each keys
-    //  Remove the hash table
-
-    delete hash_table;
+      Node* cur = hash_table[i];
+      while (cur != nullptr)
+      {
+          Node* curPrev = cur;
+          cur = cur->next;
+          delete curPrev;
+      }
   }
+
+  collection_size--;
+  delete[] hash_table;
 }
 
 template <typename K, typename V>
@@ -120,8 +123,38 @@ HashTableCollection<K, V>::operator=(const HashTableCollection<K, V>& rhs)
   //  delete current object
   make_empty();
   //  initialize current obj.
-  //  create hash table
-  //  do the copy
+  hash_table = new Node*[rhs.table_capacity];
+
+  for (int i = 0; i < rhs.table_capacity; ++i)
+  {
+    hash_table[i] = rhs.hash_table[i];
+
+    if (rhs.hash_table[i]->next != nullptr)
+    {
+      Node* iter = rhs.hash_table[i];
+      Node* lhs_iter = hash_table[i];
+      while (iter != nullptr)
+      {
+        Node* new_insert = new Node;
+        new_insert->key = iter->key;
+        new_insert->value = iter->value;
+
+        lhs_iter = new_insert;
+        lhs_iter = lhs_iter->next;
+        iter = iter->next;
+      }
+    }
+
+    else
+    {
+      Node* new_insert = new Node;
+      new_insert->key = rhs.hash_table[i]->key;
+      new_insert->value = rhs.hash_table[i]->value;
+
+      hash_table[i] = new_insert;
+    }
+  }
+
   return *this;
 }
 
@@ -143,7 +176,30 @@ void HashTableCollection<K, V>::resize_and_rehash()
   for (K key : ks)
   {
     //  hash the keys
+    std::hash<K> hash_key;
+    size_t hash_val = hash_key(key);
+    size_t old_index = hash_val % table_capacity;
+    size_t index = hash_val % new_capacity;
+
     //  create a new node in new table
+    Node* new_insert = new Node;
+    new_insert->key = key;
+    find(key, new_insert->value);
+
+    //  Collision check
+    if (hash_table[index] != nullptr)
+    {
+      //  check for more collisions should the bucket be overpopulated already
+      while (hash_table[index]->next != nullptr)
+        hash_table[index]->next = hash_table[index]->next->next;
+
+      hash_table[index]->next = new_insert;
+    }
+
+    else
+      hash_table[index] = new_insert;
+
+    collection_size++;
   }
   //  clear current data
   make_empty();
@@ -155,9 +211,160 @@ void HashTableCollection<K, V>::resize_and_rehash()
 template<typename K, typename V>
 void HashTableCollection<K, V>::insert(const K& key, const V& val)
 {
-  //  check current load facter vs load_factor_threshold and resize if needed
+  //  check current load factor vs load_factor_threshold and resize if needed
+  double cur_load_factor = collection_size / table_capacity;
+  if (cur_load_factor == 0)
+    cur_load_factor = -1;   //  0 > .75 so set it lower if there is empty list
+
+  if (cur_load_factor > load_factor_threshold)
+    resize_and_rehash();
+
   //  hash the key
+  std::hash<K> hash_key;
+  size_t hash_val = hash_key(key);
+  size_t index = hash_val % table_capacity;
+
   //  create the new Node
+  Node* new_insert = new Node;
+  new_insert->key = key;
+  new_insert->value = val;
+
+  //  collision check
+  if (hash_table[index] != nullptr)
+  {
+    while (hash_table[index]->next != nullptr)
+      hash_table[index]->next = hash_table[index]->next->next;
+
+    hash_table[index]->next = new_insert;
+  }
+
+  else
+    hash_table[index] = new_insert;
   //  update the size
   collection_size++;
 }
+
+template <typename K, typename V>
+void HashTableCollection<K, V>::remove(const K& key)
+{
+  std::hash<K> hash_key;
+  size_t hash_val = hash_key(key);
+  size_t index = hash_val % table_capacity;
+
+  //  if element dne
+  if (hash_table[index] = nullptr)
+    return;
+
+  if (hash_table[index]->next != nullptr)
+  {
+    Node* iter = hash_table[index];
+    while (iter->next != nullptr)
+    {
+      if (iter->next->key == key)
+      {
+        Node* iterNext = iter->next->next;
+        delete iter->next;
+        iter->next = iterNext;
+        break;
+      }
+
+      iter = iter->next;
+    }
+  }
+
+  else
+    delete hash_table[index];
+
+  collection_size--;
+}
+
+template <typename K, typename V>
+bool HashTableCollection<K, V>::find(const K& key, V& val) const
+{
+  std::hash<K> hash_key;
+  size_t hash_val = hash_key(key);
+  size_t index = hash_val % table_capacity;
+
+  if (hash_table[index] == nullptr)
+    return false;
+
+  val = hash_table[index]->value;
+  return true;
+}
+
+template <typename K, typename V>
+void HashTableCollection<K, V>::
+find(const K& k1, const K& k2, std::vector<K>& keys) const
+{
+  Node* iter;
+  for (int i = 0; i < table_capacity; ++i)
+  {
+    if (hash_table[i] == nullptr)
+      continue;
+
+    if (hash_table[i]->key >= k1 && hash_table[i]->key <= k2)
+    {
+      keys.push_back(hash_table[i]->key);
+
+      iter = hash_table[i]->next;
+      //  if there are multiple objects in the bucket, this loop checks them
+      while (iter != nullptr)
+      {
+        if (iter->key >= k1 && iter->key <= k2)
+          keys.push_back(iter->key);
+
+        iter = iter->next;
+      }
+    }
+  }
+}
+
+template <typename K, typename V>
+void HashTableCollection<K, V>::keys(std::vector<K>& keys) const
+{
+  Node* iter;
+  for (int i = 0; i < table_capacity; ++i)
+  {
+    if (hash_table[i] == nullptr)
+      continue;
+
+    keys.push_back(hash_table[i]->key);
+    iter = hash_table[i]->next;
+
+    while (iter != nullptr)
+    {
+      keys.push_back(iter->key);
+      iter = iter->next;
+    }
+  }
+}
+
+template <typename K, typename V>
+void HashTableCollection<K, V>::sort(std::vector<K>& keys) const
+{
+  Node* iter;
+  for (int i = 0; i < table_capacity; ++i)
+  {
+    if (hash_table[i] == nullptr)
+      continue;
+
+    keys.push_back(hash_table[i]->key);
+    iter = hash_table[i]->next;
+
+    while (iter != nullptr)
+    {
+      keys.push_back(iter->key);
+      iter = iter->next;
+    }
+  }
+
+  std::sort(keys.begin(), keys.end());
+}
+
+template <typename K, typename V>
+int HashTableCollection<K, V>::size() const
+{
+  return collection_size;
+}
+
+#endif

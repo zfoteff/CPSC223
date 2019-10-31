@@ -64,8 +64,6 @@ private:
   Node* tail;
   int length;
 
-  //  helper to delete linked list
-  void make_empty();
   //  merge sort Helper
   Node* merge_sort(Node* left, int len);
   //  quick sort HelperLinkedList key-value pair collection
@@ -270,126 +268,46 @@ int LinkedListCollection<K, V>::size() const
 template<typename K, typename V>
 void LinkedListCollection<K, V>::insertion_sort()
 {
-  if (head->next = nullptr)
-    return;
-
   Node* sortStart = head;
-  Node* sortEnd = head;
-  Node* cur = sortEnd->next;
-  Node* iter;
-  Node* iterTail;
-  Node* temp;
+  Node* cur = head;
 
-  if (sortStart == sortEnd)
+  for (int i = 1; i < length; ++i)
   {
-    /*
-    When the list is first passed it, this case creates a 2 element sorted
-    region that can be iterated through easily with a while loop
-    */
+    bool go = false;
+    sortStart = head;
 
-    if (cur->next != nullptr)
-      iter = cur->next;
-
-    if (sortStart->value > cur->value)
+    //  Traverse sorted region
+    while (!go && sortStart != cur->next)
     {
-      cur->next = sortStart;
-      sortStart->next = iter;
-      sortEnd = sortStart;
-      sortStart = cur;
-    }
+      go = false;
 
-    else
-      sortEnd = cur;
-
-    cur = sortEnd->next;
-  }
-
-  /*
-  Checks each element in sorted region to see if it is greater than cur, then
-  inserts the unsorted node into its correct position in the sorted region
-  */
-  while (cur != nullptr)
-  {
-    if (sortStart->value > cur->value)
-    {
-      temp = cur->next;
-      cur->next = sortStart;
-      sortStart = cur;
-      cur = temp;
-      continue;
-    }
-
-    temp = cur->next;
-    iterTail = sortStart;
-    iter = sortStart->next;
-
-    while (iter != sortEnd)
-    {
-      if (iter->value > cur->value)
+      //
+      if (cur->next->key < head->key)
       {
-        temp = cur->next;
-        iterTail->next = cur;
-        cur->next = iter;
-        break;
+        Node* temp = cur->next;
+        cur->next = cur->next->next;
+        temp->next = head;
+        head = temp;
+        go = true;
       }
 
-      iter = iter->next;
-      iterTail = iterTail->next;
+      //
+      else if (cur->next->key < sortStart->next->key)
+      {
+        Node* temp = cur->next;
+        cur->next = cur->next->next;
+        temp->next = sortStart->next;
+        sortStart->next = temp;
+        go = true;
+      }
+
+      else
+        sortStart = sortStart->next;
     }
 
-    cur = temp;
+    if (!go)
+      cur = cur->next;
   }
-}
-
-
-//  Helper function for merging lists together
-template<typename K, typename V>
-typename LinkedListCollection<K, V>::Node*
-LinkedListCollection<K, V>::merge_sort(Node* left, int len)
-{
-  //  Split Lists
-
-  Node* newHead = nullptr;
-  Node* right;
-
-  if (this->head == nullptr)
-    return left;
-
-  if (len == 1)
-    return left;
-
-  int mid = len/2;
-  int counter = 0;
-
-  while (counter < mid)
-    left = left->next;
-
-  right = left->next;
-  left->next = nullptr;
-
-  left = merge_sort(left, mid);
-  right = merge_sort(right, len-mid);
-
-  //  merging lists
-  if (left->value <= right->value)
-  {
-    if (newHead == nullptr)
-    {
-      newHead = left;
-      newHead->next = right;
-    }
-  }
-
-  if (right->value <= left->value)
-  {
-    if (newHead == nullptr)
-    {
-      newHead = right;
-      newHead->next = left;
-    }
-  }
-
-  return newHead;
 }
 
 
@@ -398,6 +316,104 @@ template<typename K, typename V>
 void LinkedListCollection<K, V>::merge_sort()
 {
   head = merge_sort(this->head, this->length);
+  tail = head;
+  while (tail->next != nullptr)
+    tail = tail->next;
+}
+
+
+//  Helper function for merging lists together
+template<typename K, typename V>
+typename LinkedListCollection<K, V>::Node*
+LinkedListCollection<K, V>::merge_sort(Node* left, int len)
+{
+  if (length == 1)
+    return left;
+
+  Node* temp = left;
+  Node* right;
+  Node* newHead;
+  int mid = len/2;
+  int count = 0;
+
+  //  all the nodes that belong to the left list are seperated
+  while (count < mid-1)
+  {
+    temp = temp->next;
+    count++;
+  }
+  right = temp->next;
+
+  //  recursive sort calls
+  left = merge_sort(left, mid);
+  right = merge_sort(right, len-mid);
+
+  //  reconnecting
+  if (left->key < right->key)
+  {
+    newHead = left;
+    left = left->next;
+    newHead->next = nullptr;
+  }
+
+  else
+  {
+    newHead = right;
+    right = right->next;
+    newHead->next = nullptr;
+  }
+
+  temp = newHead;
+  for (int i = 0; i < len-1; ++i)
+  {
+    //  left base case
+    if (left == nullptr)
+    {
+      temp->next = right;
+      right = right->next;
+      temp->next->next = nullptr;
+      temp = temp->next;
+    }
+
+    //  right base case
+    else if (right == nullptr)
+    {
+      temp->next = left;
+      left = left->next;
+      temp->next->next = nullptr;
+      temp = temp->next;
+    }
+
+    //  left-right comparisons
+    else if (left->key < right->key)
+    {
+      temp->next = left;
+      left = left->next;
+      temp->next->next = nullptr;
+      temp = temp->next;
+    }
+
+    else
+    {
+      temp->next = right;
+      right = right->next;
+      temp->next->next = nullptr;
+      temp = temp->next;
+    }
+  }
+
+  return newHead;
+}
+
+
+//  In place quick sort for linked lists
+template<typename K, typename V>
+void LinkedListCollection<K, V>::quick_sort()
+{
+  head = quick_sort(head, length);
+  tail = head;
+  while (tail->next != nullptr)
+    tail = tail->next;
 }
 
 
@@ -406,68 +422,120 @@ template<typename K, typename V>
 typename LinkedListCollection<K, V>::Node*
 LinkedListCollection<K, V>::quick_sort(Node* start, int len)
 {
-  int counter = 0;
-  int mid = len/2;
-  Node* lhs = nullptr;
-  Node* rhs = nullptr;
-  Node* lhsTail = nullptr;
-  Node* pivot = start;
-  Node* cur = start;
+  Node* cur = start->next;
+  Node* left = new Node;
+  Node* right = new Node;
+  Node* left_end = new Node;
+  Node* right_end = new Node;
+  int left_length = 0;
+  int right_length = 0;
 
-  //  Base case
-  if (start->next == nullptr)
-  {
+  //  Base cases
+  if (len <= 1)
     return start;
-  }
 
-  //  places nodes into correct lists
-  while(cur != nullptr)
+  if (len == 2)
   {
-    if (cur->value < pivot->value)
+    if (start->key > start->next->key)
     {
-      if (lhs == nullptr)
-      {
-        lhs = cur;
-        continue;
-      }
-
-      lhs->next = cur;
-    }
-
-    if (cur->value > pivot->value)
-    {
-      if (rhs == nullptr)
-      {
-        rhs = cur;
-        continue;
-      }
-
-      rhs->next = cur;
+      Node* temp = start;
+      start = start->next;
+      start->next = temp;
+      return start;
     }
   }
-
-  lhs = quick_sort(lhs, mid);
-  rhs = quick_sort(rhs, len-mid);
-
-  //  reconnect lists
-  cur = lhs;
 
   while (cur != nullptr)
+  {
+    if (cur->key < start->key && left == nullptr)
+      left = cur;
+    if (cur->key >= start->key && right == nullptr)
+      right = cur;
+
     cur = cur->next;
+  }
 
-  lhsTail = cur;
-  pivot->next = rhs;
-  lhsTail->next = pivot;
+  cur = start->next;
+  start->next = nullptr;
+  left_end = left;
+  right_end = right;
 
-  return lhs;
+  //  traverse all items after the 1st (pivot element) and assign them to the
+  //  right or left nodes
+  while (cur != nullptr)
+  {
+    if (left != nullptr)
+    {
+      if (cur->key < start->key && cur != left)
+      {
+        left_end->next = cur;
+        left_end = left_end->next;
+      }
+    }
+
+    if (right != nullptr)
+    {
+      if (cur->key >= start->key && cur != right)
+      {
+        right_end->next = cur;
+        right_end = right_end->next;
+      }
+    }
+
+    cur = cur->next;
+  }
+
+  if (left_end != nullptr)
+    left_end->next = nullptr;
+  if (right_end != nullptr)
+    right_end->next = nullptr;
+
+  //  find lengths of the two nodes
+  cur = left;
+  if (left != nullptr)
+  {
+    while (left != nullptr)
+    {
+      left_length++;
+      cur = cur->next;
+    }
+  }
+
+  cur = right;
+  if (right != nullptr)
+  {
+    while (right != nullptr)
+    {
+      right_length++;
+      cur = cur->next;
+    }
+  }
+
+  //  recurively call quicksort until nodes of only nodes of length 1 exist
+  if (left != nullptr)
+    left = quick_sort(left, left_length);
+  if (right != nullptr)
+   right = quick_sort(right, right_length);
+
+  //  Reconnect nodes
+  if (left != nullptr)
+  {
+    cur = left;
+    while (cur->next != nullptr)
+        cur = cur->next;
+
+    left_end = cur;
+    left_end->next = start;
+    start->next = right;
+    return left;
+  }
+
+  if (left == nullptr)
+  {
+    start->next = right;
+    return start;
+  }
 }
 
-
-//  In place quick sort for linked lists
-template<typename K, typename V>
-void LinkedListCollection<K, V>::quick_sort()
-{
-  head = quick_sort(this->head, this->length);
-}
 
 #endif

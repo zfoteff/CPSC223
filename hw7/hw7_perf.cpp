@@ -1,5 +1,5 @@
 #include <iostream>
-#include "hash_table_collection"
+#include "hash_table_collection.h"
 #include "test_driver.h"
 
 using namespace std;
@@ -12,7 +12,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  BinSearchCollection<string, double> test_collection;
+  HashTableCollection<string, double> test_collection;
   TestDriver<string, double> driver(argv[1], &test_collection);
   driver.run_tests();
   driver.print_results();

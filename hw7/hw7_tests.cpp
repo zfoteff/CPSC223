@@ -9,13 +9,13 @@
 #include <iostream>
 #include <string>
 #include <gtest/gtest.h>
-#include "binsearch_collection.h"
+#include "hash_table_collection.h"
 
 using namespace std;
 
 TEST(BasicCollectionTest, CorrectSize)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   ASSERT_EQ(c.size(), 0);
   c.insert("a", 10.0);
   ASSERT_EQ(c.size(), 1);
@@ -26,9 +26,9 @@ TEST(BasicCollectionTest, CorrectSize)
 
 TEST(BasicCollectionTest, InsertAndFind)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   double v;
-  //ASSERT_EQ(c.find("a", v), false);
+  ASSERT_EQ(c.find("a", v), false);
   c.insert("a", 10.0);
   ASSERT_EQ(c.find("a", v), true);
   ASSERT_EQ(v, 10.0);
@@ -41,10 +41,12 @@ TEST(BasicCollectionTest, InsertAndFind)
 
 TEST(BasicCollectionTest, RemoveElems)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
-  c.insert("c", 30.0);
+
+  c.insert("t", 30.0);
+
   double v;
   c.remove("a");
   ASSERT_EQ(c.find("a", v), false);
@@ -58,13 +60,14 @@ TEST(BasicCollectionTest, RemoveElems)
 
 TEST(BasicCollectionTest, GetKeyRange)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
   c.insert("c", 30.0);
   c.insert("d", 40.0);
   c.insert("e", 50.0);
   vector<string> ks;
+
   c.find("b", "d", ks);
   double v;
   ASSERT_EQ(c.find("b", v), true);
@@ -75,7 +78,7 @@ TEST(BasicCollectionTest, GetKeyRange)
 
 TEST(BasicCollectionTest, GetKeys)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
   c.insert("c", 30.0);
@@ -94,7 +97,7 @@ TEST(BasicCollectionTest, GetKeys)
 
 TEST(BasicCollectionTest, KeySort)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   c.insert("c", 30.0);
   c.insert("b", 20.0);
   c.insert("a", 10.0);
@@ -111,7 +114,7 @@ TEST(BasicCollectionTest, KeySort)
 //  collection with an even amount of elements
 TEST (BasicCollectionTest, BinSearchEven)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
   c.insert("c", 30.0);
@@ -155,7 +158,7 @@ TEST (BasicCollectionTest, BinSearchEven)
 //  collection with an odd amount of elements
 TEST (BasicCollectionTest, BinSearchOdd)
 {
-  BinSearchCollection<string, double> c;
+  HashTableCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
   c.insert("c", 30.0);

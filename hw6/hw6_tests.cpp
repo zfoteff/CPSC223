@@ -140,6 +140,40 @@ TEST (BasicCollectionTest, InsertionSortTest)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
+/*
+TEST (BasicCollectionTest, MergeSortTest)
+{
+  LinkedListCollection<string, double> c;
+  c.insert("b", 30.0);
+  c.insert("c", 10.0);
+  c.insert("d", 40.0);
+  c.insert("e", 50.0);
+  c.insert("a", 20.0);
+  c.merge_sort();
+  cout<<"here"<<endl;
+  vector<string> sorted_ks;
+  c.keys(sorted_ks);
+
+  for (int i = 0; i < int(sorted_ks.size()) - 1; ++i)
+    ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
+}
+*/
+
+TEST (BasicCollectionTest, QuickSortTest)
+{
+  LinkedListCollection<string, double> c;
+  c.insert("b", 30.0);
+  c.insert("e", 50.0);
+  c.insert("a", 20.0);
+  c.insert("c", 10.0);
+  c.insert("d", 40.0);
+  c.quick_sort();
+  vector<string> sorted_ks;
+  c.keys(sorted_ks);
+
+  for (int i = 0; i < int(sorted_ks.size()) - 1; ++i)
+    ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
+}
 
 int main(int argc, char** argv)
 {

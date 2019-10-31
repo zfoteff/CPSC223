@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/hw6test.dir/hw6_tests.cpp.o"
-  "hw6test.pdb"
   "hw6test"
+  "hw6test.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
