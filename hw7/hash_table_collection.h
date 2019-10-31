@@ -89,20 +89,30 @@ void HashTableCollection<K, V>::make_empty()
       Node* cur = hash_table[i];
       while (cur != nullptr)
       {
+          std::cout<<"s1"<<std::endl;
           Node* curPrev = cur;
+          std::cout<<"s2"<<std::endl;
           cur = cur->next;
+          std::cout<<"s3"<<std::endl;
           delete curPrev;
+          std::cout<<"s4"<<std::endl;
       }
+      delete hash_table[i];
+      std::cout<<i<<std::endl;
   }
 
-  collection_size--;
-  delete[] hash_table;
+  delete hash_table;
+  collection_size = 0;
+
+  std::cout<<"done"<<std::endl;
 }
+
 
 template <typename K, typename V>
 HashTableCollection<K, V>::~HashTableCollection()
 {
-  make_empty();
+    std::cout<<"here"<<std::endl;
+    make_empty();
 }
 
 template<typename K, typename V>
@@ -127,32 +137,19 @@ HashTableCollection<K, V>::operator=(const HashTableCollection<K, V>& rhs)
 
   for (int i = 0; i < rhs.table_capacity; ++i)
   {
-    hash_table[i] = rhs.hash_table[i];
-
-    if (rhs.hash_table[i]->next != nullptr)
-    {
-      Node* iter = rhs.hash_table[i];
-      Node* lhs_iter = hash_table[i];
-      while (iter != nullptr)
+      Node* cur = hash_table[i];
+      while (rhs.hash_table[i] != nullptr)
       {
-        Node* new_insert = new Node;
-        new_insert->key = iter->key;
-        new_insert->value = iter->value;
+          cur->next = nullptr;
+          Node* iter = rhs.hash_table[i];
+          Node* new_insert = new Node;
+          new_insert->key = iter->key;
+          new_insert->value = iter->value;
 
-        lhs_iter = new_insert;
-        lhs_iter = lhs_iter->next;
-        iter = iter->next;
+          cur = new_insert;
+          rhs.hash_table = rhs.hash_table->next;
+          cur = cur->next;
       }
-    }
-
-    else
-    {
-      Node* new_insert = new Node;
-      new_insert->key = rhs.hash_table[i]->key;
-      new_insert->value = rhs.hash_table[i]->value;
-
-      hash_table[i] = new_insert;
-    }
   }
 
   return *this;
@@ -178,7 +175,6 @@ void HashTableCollection<K, V>::resize_and_rehash()
     //  hash the keys
     std::hash<K> hash_key;
     size_t hash_val = hash_key(key);
-    size_t old_index = hash_val % table_capacity;
     size_t index = hash_val % new_capacity;
 
     //  create a new node in new table

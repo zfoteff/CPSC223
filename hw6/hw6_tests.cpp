@@ -98,20 +98,20 @@ TEST(BasicCollectionTest, KeySort)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-/*
+
 TEST (BasicCollectionTest, CopyConstructorTest)
 {
   LinkedListCollection<string, double> rhs;
   rhs.insert("a", 10.0);
   rhs.insert("b", 20.0);
-  LinkedListCollection<string, double> lhs(rhs);
+  LinkedListCollection<string, double> lhs = rhs;
   double v;
   ASSERT_EQ(lhs.find("a", v), true);
   ASSERT_EQ(v, 10.0);
   ASSERT_EQ(lhs.find("b", v), true);
   ASSERT_EQ(v, 20.0);
 }
-*/
+
 
 TEST (BasicCollectionTest, DestructorTest)
 {
@@ -140,7 +140,7 @@ TEST (BasicCollectionTest, InsertionSortTest)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-/*
+
 TEST (BasicCollectionTest, MergeSortTest)
 {
   LinkedListCollection<string, double> c;
@@ -157,7 +157,7 @@ TEST (BasicCollectionTest, MergeSortTest)
   for (int i = 0; i < int(sorted_ks.size()) - 1; ++i)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
-*/
+
 
 TEST (BasicCollectionTest, QuickSortTest)
 {

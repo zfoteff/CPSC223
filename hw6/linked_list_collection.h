@@ -81,17 +81,13 @@ LinkedListCollection<K, V>::LinkedListCollection()
 }
 
 
+
 //  Copy Constructor for LinkedList key-value pair collection
 template<typename K, typename V>
 LinkedListCollection<K, V>::
 LinkedListCollection(const LinkedListCollection<K, V>& rhs)
 {
-  Node* cur = rhs.head;
-  while (cur != nullptr)
-  {
-    this->insert(cur->key, cur->value);
-    cur = cur->next;
-  }
+   *this = rhs;
 }
 
 
@@ -268,7 +264,7 @@ int LinkedListCollection<K, V>::size() const
 template<typename K, typename V>
 void LinkedListCollection<K, V>::insertion_sort()
 {
-  Node* sortStart = head;
+  Node* sortStart;
   Node* cur = head;
 
   for (int i = 1; i < length; ++i)
@@ -425,8 +421,8 @@ LinkedListCollection<K, V>::quick_sort(Node* start, int len)
   Node* cur = start->next;
   Node* left = new Node;
   Node* right = new Node;
-  Node* left_end = new Node;
-  Node* right_end = new Node;
+  Node* left_end;
+  Node* right_end;
   int left_length = 0;
   int right_length = 0;
 
@@ -494,7 +490,7 @@ LinkedListCollection<K, V>::quick_sort(Node* start, int len)
   cur = left;
   if (left != nullptr)
   {
-    while (left != nullptr)
+    while (cur != nullptr)
     {
       left_length++;
       cur = cur->next;
@@ -504,14 +500,14 @@ LinkedListCollection<K, V>::quick_sort(Node* start, int len)
   cur = right;
   if (right != nullptr)
   {
-    while (right != nullptr)
+    while (cur != nullptr)
     {
       right_length++;
       cur = cur->next;
     }
   }
 
-  //  recurively call quicksort until nodes of only nodes of length 1 exist
+  //  recursively call quicksort until nodes of only nodes of length 1 exist
   if (left != nullptr)
     left = quick_sort(left, left_length);
   if (right != nullptr)
