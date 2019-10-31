@@ -61,13 +61,10 @@ private:
 
   //  Int number of k-v pairs in the collection
   int collection_size;
-
   //  Number of hash table buckets (default: 16)
   int table_capacity;
-
   //  Hash table array load factor (set at 75% for resizing)
   const double load_factor_threshold;
-
   //  Hash table array
   Node** hash_table;
 };
@@ -90,6 +87,77 @@ void HashTableCollection<K, V>::make_empty()
   //  make sure hash table exists
   while (hash_table != nullptr)
   {
-    
+
+
+    //  Remove each keys
+    //  Remove the hash table
+
+    delete hash_table;
   }
+}
+
+template <typename K, typename V>
+HashTableCollection<K, V>::~HashTableCollection()
+{
+  make_empty();
+}
+
+template<typename K, typename V>
+HashTableCollection<K, V>::
+HashTableCollection(const HashTableCollection<K,V>& rhs) : hash_table(nullptr)
+{
+  *this = rhs;
+}
+
+template<typename K, typename V>
+HashTableCollection<K, V>&
+HashTableCollection<K, V>::operator=(const HashTableCollection<K, V>& rhs)
+{
+  //  check if rhs is current obj.
+  if (this == &rhs)
+    return *this;
+
+  //  delete current object
+  make_empty();
+  //  initialize current obj.
+  //  create hash table
+  //  do the copy
+  return *this;
+}
+
+template <typename K, typename V>
+void HashTableCollection<K, V>::resize_and_rehash()
+{
+  //  setup new table
+  int new_capacity = table_capacity * 2;
+  Node** new_table = new Node*[new_capacity];
+
+  //  dynamically allocate new table
+  for (int i = 0; i < new_capacity; ++i)
+    new_table[i] = nullptr;
+
+  std::vector<K> ks;
+  keys(ks);
+
+  //  rehash all keys into the new hash table
+  for (K key : ks)
+  {
+    //  hash the keys
+    //  create a new node in new table
+  }
+  //  clear current data
+  make_empty();
+  //  set the table and other vars
+  hash_table = new_table;
+  table_capacity = new_capacity;
+}
+
+template<typename K, typename V>
+void HashTableCollection<K, V>::insert(const K& key, const V& val)
+{
+  //  check current load facter vs load_factor_threshold and resize if needed
+  //  hash the key
+  //  create the new Node
+  //  update the size
+  collection_size++;
 }

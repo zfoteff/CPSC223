@@ -98,7 +98,7 @@ TEST(BasicCollectionTest, KeySort)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-
+/*
 TEST (BasicCollectionTest, CopyConstructorTest)
 {
   LinkedListCollection<string, double> rhs;
@@ -111,23 +111,7 @@ TEST (BasicCollectionTest, CopyConstructorTest)
   ASSERT_EQ(lhs.find("b", v), true);
   ASSERT_EQ(v, 20.0);
 }
-
-
-TEST (BasicCollectionTest, AssignmentOperatorTest)
-{
-  LinkedListCollection<string, double> lhs;
-  LinkedListCollection<string, double> rhs;
-  lhs.insert("a", 10.0);
-  rhs.insert("b", 20.0);
-  rhs.insert("c", 30.0);
-  lhs = rhs;
-  double v;
-  ASSERT_EQ(lhs.find("b", v), true);
-  ASSERT_EQ(v, 20.0);
-  ASSERT_EQ(lhs.find("c", v), true);
-  ASSERT_EQ(v, 30.0);
-}
-
+*/
 
 TEST (BasicCollectionTest, DestructorTest)
 {
@@ -138,6 +122,24 @@ TEST (BasicCollectionTest, DestructorTest)
   c->insert("c", 30.0);
   delete c;
 }
+
+
+TEST (BasicCollectionTest, InsertionSortTest)
+{
+  LinkedListCollection<string, double> c;
+  c.insert("c", 30.0);
+  c.insert("a", 10.0);
+  c.insert("d", 40.0);
+  c.insert("e", 50.0);
+  c.insert("b", 20.0);
+  c.insertion_sort();
+  vector<string> sorted_ks;
+  c.keys(sorted_ks);
+
+  for (int i = 0; i < int(sorted_ks.size()) - 1; ++i)
+    ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
+}
+
 
 int main(int argc, char** argv)
 {

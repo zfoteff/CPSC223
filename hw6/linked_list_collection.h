@@ -2,8 +2,11 @@
 #define LINKED_LIST_H
 
 #include <vector>
+#include <string>
 #include <algorithm>
 #include "collection.h"
+
+using namespace std;
 
 template<typename K, typename V>
 class LinkedListCollection : public Collection<K, V>
@@ -99,17 +102,24 @@ template<typename K, typename V>
 LinkedListCollection<K, V>& LinkedListCollection<K, V>
 ::operator=(const LinkedListCollection<K, V>& rhs)
 {
-  std::cout<<"Here"<<std::endl;
-  if(this == &rhs)
-    return *this;
-
-  delete this;
-
-  Node* temp = rhs.head;
-  while(temp != nullptr)
+  if (&rhs != this)
   {
-    this->insert(temp->key, temp->value);
-    temp = temp->next;
+    Node* temp = this->head;
+    while(temp->next != nullptr)
+    {
+      temp = temp->next;
+      delete temp;
+      temp = head;
+    }
+    delete this->head;
+    this->length = 0;
+
+    temp = rhs.head;
+    while(temp != nullptr)
+    {
+      this->insert(temp->key, temp->value);
+      temp = temp->next;
+    }
   }
 
   return *this;
@@ -260,6 +270,9 @@ int LinkedListCollection<K, V>::size() const
 template<typename K, typename V>
 void LinkedListCollection<K, V>::insertion_sort()
 {
+  if (head->next = nullptr)
+    return;
+
   Node* sortStart = head;
   Node* sortEnd = head;
   Node* cur = sortEnd->next;
@@ -273,55 +286,55 @@ void LinkedListCollection<K, V>::insertion_sort()
     When the list is first passed it, this case creates a 2 element sorted
     region that can be iterated through easily with a while loop
     */
-    iter = cur->next;
 
-    if (sortStart->value >= cur->value)
+    if (cur->next != nullptr)
+      iter = cur->next;
+
+    if (sortStart->value > cur->value)
     {
       cur->next = sortStart;
+      sortStart->next = iter;
+      sortEnd = sortStart;
       sortStart = cur;
-      iter = iter;
     }
 
     else
       sortEnd = cur;
 
-    sortStart->next = sortEnd;
-    cur = iter;
-    head = sortStart;
+    cur = sortEnd->next;
   }
 
+  /*
+  Checks each element in sorted region to see if it is greater than cur, then
+  inserts the unsorted node into its correct position in the sorted region
+  */
   while (cur != nullptr)
   {
-    iter = sortStart;               //  starts at first element of sorted region
-    temp = cur->next;               //  stores cur->next for next iteration
+    if (sortStart->value > cur->value)
+    {
+      temp = cur->next;
+      cur->next = sortStart;
+      sortStart = cur;
+      cur = temp;
+      continue;
+    }
+
+    temp = cur->next;
+    iterTail = sortStart;
+    iter = sortStart->next;
 
     while (iter != sortEnd)
     {
-      if (iter->value >= cur->value)
+      if (iter->value > cur->value)
       {
-        while (iterTail != iter)
-          iterTail = iterTail->next;//  set iterTail->next = iter for easy swaps
-
-        sortEnd->next = cur->next;  //  gets next cur value ready
-        cur->next = iter;           //  since iter > cur it becomes cur->next
-        iterTail->next = cur;       //  sets iterTail to cur to finish insertion
+        temp = cur->next;
+        iterTail->next = cur;
+        cur->next = iter;
         break;
       }
 
       iter = iter->next;
-    }
-
-    /*
-      if the last sorted element and the final element need to be swapped this
-      case handles it
-    */
-    if (sortEnd->value >= cur->value)
-    {
-      while (iter != sortEnd)
-        iter = iter->next;
-
-      cur->next = sortEnd;
-      iter->next = cur;
+      iterTail = iterTail->next;
     }
 
     cur = temp;
