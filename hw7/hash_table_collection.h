@@ -1,3 +1,11 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: hw7_tests.cpp
+    Definition for HashTableCollection class object
+*/
+
 #ifndef HASH_TABLE_COLLECTION_H
 #define HASH_TABLE_COLLECTION_H
 
@@ -44,7 +52,6 @@ public:
   int size() const;
 
 private:
-
   //  helper to empty entire hash HashTableCollection
   void make_empty();
 
@@ -115,6 +122,7 @@ HashTableCollection<K, V>::~HashTableCollection()
     make_empty();
 }
 
+
 template<typename K, typename V>
 HashTableCollection<K, V>::
 HashTableCollection(const HashTableCollection<K,V>& rhs) : hash_table(nullptr)
@@ -177,12 +185,12 @@ void HashTableCollection<K, V>::resize_and_rehash()
     size_t hash_val = hash_key(key);
     size_t index = hash_val % new_capacity;
 
-    //  create a new node in new table
+	//  create a new node in new table
     Node* new_insert = new Node;
     new_insert->key = key;
     find(key, new_insert->value);
-
-    //  Collision check
+	
+	//  Collision check
     if (hash_table[index] != nullptr)
     {
       //  check for more collisions should the bucket be overpopulated already
@@ -239,6 +247,7 @@ void HashTableCollection<K, V>::insert(const K& key, const V& val)
   //  update the size
   collection_size++;
 }
+
 
 template <typename K, typename V>
 void HashTableCollection<K, V>::remove(const K& key)
@@ -304,7 +313,8 @@ find(const K& k1, const K& k2, std::vector<K>& keys) const
 
       iter = hash_table[i]->next;
       //  if there are multiple objects in the bucket, this loop checks them
-      while (iter != nullptr)
+      
+	  while (iter != nullptr)
       {
         if (iter->key >= k1 && iter->key <= k2)
           keys.push_back(iter->key);

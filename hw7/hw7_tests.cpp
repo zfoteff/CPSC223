@@ -2,8 +2,8 @@
 * Class: CPSC 223-01
 * Zac Foteff
 * GU Username: zfoteff
-* File Name: hw5_tests.cpp
-    Test file for BinSearch collection class object
+* File Name: hw7_tests.cpp
+    Test file for HashTableCollection class object
 */
 
 #include <iostream>

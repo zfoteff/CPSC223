@@ -1,3 +1,11 @@
+/*
+* Class: CPSC 223-01
+* Zac Foteff
+* GU Username: zfoteff
+* File Name: hw6_tests.cpp
+    unit test file for hw6 
+*/
+
 #include <iostream>
 #include <string>
 #include <gtest/gtest.h>
@@ -15,7 +23,6 @@ TEST(BasicCollectionTest, CorrectSize)
   ASSERT_EQ(c.size(), 2);
 }
 
-
 TEST(BasicCollectionTest, InsertAndFind)
 {
   LinkedListCollection<string, double> c;
@@ -29,7 +36,6 @@ TEST(BasicCollectionTest, InsertAndFind)
   ASSERT_EQ(c.find("b", v), true);
   ASSERT_EQ(v, 20.0);
 }
-
 
 TEST(BasicCollectionTest, RemoveElems)
 {
@@ -48,6 +54,15 @@ TEST(BasicCollectionTest, RemoveElems)
 }
 
 
+
+
+
+
+
+
+
+
+
 TEST(BasicCollectionTest, GetKeys)
 {
   LinkedListCollection<string, double> c;
@@ -59,13 +74,11 @@ TEST(BasicCollectionTest, GetKeys)
   vector<string>::iterator iter;
   iter = find(ks.begin(), ks.end(), "a");
   ASSERT_NE(iter, ks.end());
-
   iter = find(ks.begin(), ks.end(), "b");
   ASSERT_NE(iter, ks.end());
   iter = find(ks.begin(), ks.end(), "c");
   ASSERT_NE(iter, ks.end());
 }
-
 
 TEST(BasicCollectionTest, GetKeyRange)
 {
@@ -98,7 +111,6 @@ TEST(BasicCollectionTest, KeySort)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-
 TEST (BasicCollectionTest, CopyConstructorTest)
 {
   LinkedListCollection<string, double> rhs;
@@ -113,6 +125,9 @@ TEST (BasicCollectionTest, CopyConstructorTest)
 }
 
 
+
+
+
 TEST (BasicCollectionTest, DestructorTest)
 {
   LinkedListCollection<string, double>* c
@@ -122,7 +137,6 @@ TEST (BasicCollectionTest, DestructorTest)
   c->insert("c", 30.0);
   delete c;
 }
-
 
 TEST (BasicCollectionTest, InsertionSortTest)
 {
@@ -140,7 +154,6 @@ TEST (BasicCollectionTest, InsertionSortTest)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
 
-
 TEST (BasicCollectionTest, MergeSortTest)
 {
   LinkedListCollection<string, double> c;
@@ -157,7 +170,6 @@ TEST (BasicCollectionTest, MergeSortTest)
   for (int i = 0; i < int(sorted_ks.size()) - 1; ++i)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
 }
-
 
 TEST (BasicCollectionTest, QuickSortTest)
 {
