@@ -1,17 +1,10 @@
-/*
-* Class: CPSC 223-01
-* Zac Foteff
-* GU Username: zfoteff
-* File Name: hw7_tests.cpp
-    Test file for HashTableCollection class object
-*/
-
 #include <iostream>
 #include <string>
 #include <gtest/gtest.h>
 #include "hash_table_collection.h"
 
 using namespace std;
+
 
 TEST(BasicCollectionTest, CorrectSize)
 {
@@ -21,6 +14,61 @@ TEST(BasicCollectionTest, CorrectSize)
   ASSERT_EQ(c.size(), 1);
   c.insert("b", 20.0);
   ASSERT_EQ(c.size(), 2);
+  c.insert("c", 30.0);
+  ASSERT_EQ(c.size(), 3);
+  c.remove("a");
+  ASSERT_EQ(c.size(), 2);
+  c.remove("b");
+  ASSERT_EQ(c.size(), 1);
+  c.remove("c");
+  ASSERT_EQ(c.size(), 0);
+}
+
+
+TEST (BasicCollectionTest, DestructorTest)
+{
+  HashTableCollection<string, double>* c
+  = new HashTableCollection<string, double>();
+  c->insert("a", 10.0);
+  c->insert("b", 20.0);
+  c->insert("c", 30.0);
+  delete c;
+}
+
+
+TEST (BasicCollectionTest, CopyConstructorTest)
+{
+  HashTableCollection<string, double> rhs;
+  rhs.insert("a", 10.0);
+  rhs.insert("b", 20.0);
+  rhs.insert("c", 30.0);
+  HashTableCollection<string, double> lhs(rhs);
+  lhs.print();
+  rhs.print();
+  double v;
+  ASSERT_EQ(lhs.find("a", v), true);
+  ASSERT_EQ(v, 10.0);
+  ASSERT_EQ(lhs.find("b", v), true);
+  ASSERT_EQ(v, 20.0);
+  ASSERT_EQ(lhs.find("c", v), true);
+  ASSERT_EQ(v, 30.0);
+}
+
+
+TEST (BasicCollectionTest, AssignementOperatorTest)
+{
+  HashTableCollection<string, double> lhs;
+  HashTableCollection<string, double> rhs;
+  lhs.insert("a", 10.0);
+  rhs.insert("b", 20.0);
+  rhs.insert("c", 30.0);
+  lhs = rhs;
+  double v;
+  ASSERT_EQ(lhs.find("b", v), true);
+  ASSERT_EQ(v, 20.0);
+  ASSERT_EQ(lhs.find("c", v), true);
+  ASSERT_EQ(v, 30.0);
+  ASSERT_EQ(lhs.find("a", v), false);
 }
 
 
@@ -36,6 +84,9 @@ TEST(BasicCollectionTest, InsertAndFind)
   c.insert("b", 20.0);
   ASSERT_EQ(c.find("b", v), true);
   ASSERT_EQ(v, 20.0);
+  c.insert("c", 30.0);
+  ASSERT_EQ(c.find("c", v), true);
+  ASSERT_EQ(v, 30.0);
 }
 
 
@@ -44,35 +95,19 @@ TEST(BasicCollectionTest, RemoveElems)
   HashTableCollection<string, double> c;
   c.insert("a", 10.0);
   c.insert("b", 20.0);
-
-  c.insert("t", 30.0);
-
+  c.insert("c", 30.0);
+  c.print();
   double v;
   c.remove("a");
-  ASSERT_EQ(c.find("a", v), false);
+  c.print();
+  ASSERT_EQ(false, c.find("a", v));
   c.remove("b");
-  ASSERT_EQ(c.find("b", v), false);
+  c.print();
+  ASSERT_EQ(false, c.find("b", v));
   c.remove("c");
-  ASSERT_EQ(c.find("c", v), false);
+  c.print();
+  ASSERT_EQ(false, c.find("c", v));
   ASSERT_EQ(c.size(), 0);
-}
-
-
-TEST(BasicCollectionTest, GetKeyRange)
-{
-  HashTableCollection<string, double> c;
-  c.insert("a", 10.0);
-  c.insert("b", 20.0);
-  c.insert("c", 30.0);
-  c.insert("d", 40.0);
-  c.insert("e", 50.0);
-  vector<string> ks;
-
-  c.find("b", "d", ks);
-  double v;
-  ASSERT_EQ(c.find("b", v), true);
-  ASSERT_EQ(c.find("c", v), true);
-  ASSERT_EQ(c.find("d", v), true);
 }
 
 
@@ -95,112 +130,120 @@ TEST(BasicCollectionTest, GetKeys)
 }
 
 
+TEST(BasicCollectionTest, GetKeyRange)
+{
+  HashTableCollection<string, double> c;
+  c.insert("a", 10.0);
+  c.insert("b", 20.0);
+  c.insert("c", 30.0);
+  c.insert("d", 40.0);
+  c.insert("e", 50.0);
+  vector<string> ks;
+  c.find("b", "d", ks);
+  double v;
+  ASSERT_EQ(c.find("b", v), true);
+  ASSERT_EQ(c.find("c", v), true);
+  ASSERT_EQ(c.find("d", v), true);
+}
+
+
 TEST(BasicCollectionTest, KeySort)
 {
   HashTableCollection<string, double> c;
-  c.insert("c", 30.0);
-  c.insert("b", 20.0);
   c.insert("a", 10.0);
+  c.insert("b", 20.0);
+  c.insert("c", 30.0);
   c.insert("d", 40.0);
   vector<string> sorted_ks;
   c.sort(sorted_ks);
 
   for (int i = 0; i < int(sorted_ks.size()) - 1; ++i)
     ASSERT_LE(sorted_ks[i], sorted_ks[i+1]);
+  }
+
+
+TEST(BasicCollectionTest, Resize)
+{
+  HashTableCollection <int, int> c;
+  //  11/16 ~= .69
+  for (int i = 0; i < 12; ++i)
+    c.insert(i, i+1);
+
+  int selection_1_val;
+  int selection_2_val;
+  int selection_3_val;
+  int selection_4_val;
+  int k;
+  ASSERT_EQ(c.find(7, selection_1_val), true);
+  ASSERT_EQ(c.find(11, selection_2_val), true);
+
+  vector<int> pre_merge_keys;
+  vector<int> post_merge_keys;
+
+  c.keys(pre_merge_keys);
+  //  will tip the collection over the load threshold
+  //  12/16 = 3/4 = .75
+  c.insert(12, 13);
+  c.keys(post_merge_keys);
+
+  //  Assert that the same elements still exist
+  ASSERT_EQ(c.find(7, selection_3_val), true);
+  ASSERT_EQ(c.find(11, selection_4_val), true);
+  //  Assert new insert exists in new list
+  ASSERT_EQ(c.find(12, k), true);
+  ASSERT_EQ(k, 13);
+  //  Assert that the keys still contain the same values
+  ASSERT_EQ(selection_1_val, selection_3_val);
+  ASSERT_EQ(selection_2_val, selection_4_val);
+
+  ASSERT_NE(pre_merge_keys, post_merge_keys);
 }
 
 
-//  Ensures integer division leads to the right index being returned for a
-//  collection with an even amount of elements
-TEST (BasicCollectionTest, BinSearchEven)
+TEST(BasicCollectionTest, MultipleResize)
 {
-  HashTableCollection<string, double> c;
-  c.insert("a", 10.0);
-  c.insert("b", 20.0);
-  c.insert("c", 30.0);
-  c.insert("d", 40.0);
-  c.insert("e", 50.0);
-  c.insert("f", 60.0);
-  vector<string> k;
-  c.keys(k);
-  double v;
-  //  Checks that the size is evenly divisible by 2 (even number)
-  ASSERT_EQ(c.size() % 2, 0);
-  /*
-    This code block checks that the element:
-      - exists in the collection
-      - it is in the correct index in the collection
-      - it returns the correct value
-  */
-  ASSERT_EQ(c.find("a", v), true);
-  ASSERT_EQ(k[0], "a");
-  ASSERT_EQ(v, 10.0);
-  //  end block
-  ASSERT_EQ(c.find("b", v), true);
-  ASSERT_EQ(k[1], "b");
-  ASSERT_EQ(v, 20.0);
-  ASSERT_EQ(c.find("c", v), true);
-  ASSERT_EQ(k[2], "c");
-  ASSERT_EQ(v, 30.0);
-  ASSERT_EQ(c.find("d", v), true);
-  ASSERT_EQ(k[3], "d");
-  ASSERT_EQ(v, 40.0);
-  ASSERT_EQ(c.find("e", v), true);
-  ASSERT_EQ(k[4], "e");
-  ASSERT_EQ(v, 50.0);
-  ASSERT_EQ(c.find("f", v), true);
-  ASSERT_EQ(k[5], "f");
-  ASSERT_EQ(v, 60.0);
-}
+  HashTableCollection<int, int> c;
+  for (int i = 0; i < 12; ++i)
+    c.insert(i, i+1);
 
+  int selection_1_val;
+  int selection_2_val;
+  int selection_3_val;
+  int selection_4_val;//  if bucket is empty
+    if (temp == nullptr)
+    {
+      temp = new Node;
+      temp->key = key;
+      temp->val = val;
+      temp->next = nullptr;
+      new_table[index] = temp;
+    }
 
-//  Ensures integer division leads to the right index being returned for a
-//  collection with an odd amount of elements
-TEST (BasicCollectionTest, BinSearchOdd)
-{
-  HashTableCollection<string, double> c;
-  c.insert("a", 10.0);
-  c.insert("b", 20.0);
-  c.insert("c", 30.0);
-  c.insert("d", 40.0);
-  c.insert("e", 50.0);
-  c.insert("f", 60.0);
-  c.insert("g", 70.0);
-  vector<string> k;
-  c.keys(k);
-  double v;
-  //  Checks that 2 divides the size with a remainder of 1 (odd number)
-  ASSERT_EQ(c.size() % 2, 1);
+    else
+    {
+      temp = new Node;
+      temp->key = key;
+      temp->value = val;
+      temp->next = new_table[index];
+    }
 
-  /*
-    This code block checks that the element:
-      - exists in the collection
-      - it is in the correct index in the collection
-      - it returns the correct value
-  */
-  ASSERT_EQ(c.find("a", v), true);
-  ASSERT_EQ(k[0], "a");
-  ASSERT_EQ(v, 10.0);
-  //  end block
-  ASSERT_EQ(c.find("b", v), true);
-  ASSERT_EQ(k[1], "b");
-  ASSERT_EQ(v, 20.0);
-  ASSERT_EQ(c.find("c", v), true);
-  ASSERT_EQ(k[2], "c");
-  ASSERT_EQ(v, 30.0);
-  ASSERT_EQ(c.find("d", v), true);
-  ASSERT_EQ(k[3], "d");
-  ASSERT_EQ(v, 40.0);
-  ASSERT_EQ(c.find("e", v), true);
-  ASSERT_EQ(k[4], "e");
-  ASSERT_EQ(v, 50.0);
-  ASSERT_EQ(c.find("f", v), true);
-  ASSERT_EQ(k[5], "f");
-  ASSERT_EQ(v, 60.0);
-  ASSERT_EQ(c.find("g", v), true);
-  ASSERT_EQ(k[6], "g");
-  ASSERT_EQ(v, 70.0);
+    new_collection_size++;
+  int k;
+  ASSERT_EQ(true, c.find(5, selection_1_val));
+  ASSERT_EQ(true, c.find(8, selection_2_val));
 
+  c.insert(12, 13);
+
+  for (int i = 13; i < 23; ++i)
+    c.insert(i, i+i);
+
+  c.insert(24, 25);
+
+  //  Assert keys still exist in collection and have same value as before
+  ASSERT_EQ(true, c.find(5, selection_3_val));
+  ASSERT_EQ(true, c.find(8, selection_4_val));
+  ASSERT_EQ(selection_1_val, selection_3_val);
+  ASSERT_EQ(selection_2_val, selection_4_val);
 }
 
 
