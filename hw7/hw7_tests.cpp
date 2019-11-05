@@ -43,8 +43,6 @@ TEST (BasicCollectionTest, CopyConstructorTest)
   rhs.insert("b", 20.0);
   rhs.insert("c", 30.0);
   HashTableCollection<string, double> lhs(rhs);
-  lhs.print();
-  rhs.print();
   double v;
   ASSERT_EQ(lhs.find("a", v), true);
   ASSERT_EQ(v, 10.0);
@@ -96,16 +94,12 @@ TEST(BasicCollectionTest, RemoveElems)
   c.insert("a", 10.0);
   c.insert("b", 20.0);
   c.insert("c", 30.0);
-  c.print();
   double v;
   c.remove("a");
-  c.print();
   ASSERT_EQ(false, c.find("a", v));
   c.remove("b");
-  c.print();
   ASSERT_EQ(false, c.find("b", v));
   c.remove("c");
-  c.print();
   ASSERT_EQ(false, c.find("c", v));
   ASSERT_EQ(c.size(), 0);
 }
@@ -210,24 +204,7 @@ TEST(BasicCollectionTest, MultipleResize)
   int selection_2_val;
   int selection_3_val;
   int selection_4_val;//  if bucket is empty
-    if (temp == nullptr)
-    {
-      temp = new Node;
-      temp->key = key;
-      temp->val = val;
-      temp->next = nullptr;
-      new_table[index] = temp;
-    }
 
-    else
-    {
-      temp = new Node;
-      temp->key = key;
-      temp->value = val;
-      temp->next = new_table[index];
-    }
-
-    new_collection_size++;
   int k;
   ASSERT_EQ(true, c.find(5, selection_1_val));
   ASSERT_EQ(true, c.find(8, selection_2_val));

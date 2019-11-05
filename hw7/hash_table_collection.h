@@ -91,6 +91,7 @@ collection_size(0), table_capacity(16)
       hash_table[i] = nullptr;
 }
 
+
 template<typename K, typename V>
 HashTableCollection<K, V>::HashTableCollection(const HashTableCollection<K, V>& rhs)
 : hash_table(nullptr), load_factor_threshold(rhs.load_factor_threshold),
@@ -98,6 +99,7 @@ HashTableCollection<K, V>::HashTableCollection(const HashTableCollection<K, V>& 
 {
   *this = rhs;
 }
+
 
 template<typename K, typename V>
 HashTableCollection<K, V>&
@@ -129,6 +131,7 @@ HashTableCollection<K, V>::operator=(const HashTableCollection<K, V>& rhs)
 
   return *this;
 }
+
 
 template <typename K, typename V>
 HashTableCollection<K, V>::~HashTableCollection() { make_empty(); }
@@ -188,6 +191,7 @@ void HashTableCollection<K, V>::resize_and_rehash()
   table_capacity = new_capacity;
 }
 
+
 template<typename K, typename V>
 void HashTableCollection<K, V>::insert(const K& key, const V& val)
 {
@@ -232,6 +236,7 @@ void HashTableCollection<K, V>::insert(const K& key, const V& val)
   }
 }
 
+
 template <typename K, typename V>
 void HashTableCollection<K, V>::remove(const K& key)
 {
@@ -273,6 +278,7 @@ void HashTableCollection<K, V>::remove(const K& key)
   }
 }
 
+
 template <typename K, typename V>
 bool HashTableCollection<K, V>::find(const K& key, V& val) const
 {
@@ -301,6 +307,7 @@ bool HashTableCollection<K, V>::find(const K& key, V& val) const
   return false;
 }
 
+
 template <typename K, typename V>
 void HashTableCollection<K, V>::
 find(const K& k1, const K& k2, std::vector<K>& keys) const
@@ -328,6 +335,7 @@ find(const K& k1, const K& k2, std::vector<K>& keys) const
   }
 }
 
+
 template <typename K, typename V>
 void HashTableCollection<K, V>::keys(std::vector<K>& keys) const
 {
@@ -347,6 +355,7 @@ void HashTableCollection<K, V>::keys(std::vector<K>& keys) const
     }
   }
 }
+
 
 template <typename K, typename V>
 void HashTableCollection<K, V>::sort(std::vector<K>& keys) const
@@ -370,11 +379,13 @@ void HashTableCollection<K, V>::sort(std::vector<K>& keys) const
   std::sort(keys.begin(), keys.end());
 }
 
+
 template <typename K, typename V>
 int HashTableCollection<K, V>::size() const
 {
   return collection_size;
 }
+
 
 template <typename K, typename V>
 void HashTableCollection<K, V>::make_empty()
@@ -395,6 +406,7 @@ void HashTableCollection<K, V>::make_empty()
     delete hash_table;
   }
 }
+
 
 template <typename K, typename V>
 void HashTableCollection<K, V>::print() const
