@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/hw8test.dir/hw8_tests.cpp.o  -o hw8test -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 

@@ -1,0 +1,27 @@
+template<typename K, typename V>
+BSTCollection<K, V>& BSTCollection<K, V>::operator=(const BSTCollection<K, V>& rhs)
+{
+  if (this == &rhs)
+    return *this;
+
+  //  delete current
+  make_empty(root);
+  //  build tree
+  std::vector<K> ks;
+  preorder(rhs.root, ks);
+  //  create a new node in the new list using the kv-pair from rhs
+  for (K key : ks)
+  {
+    cout<<"Start of constructor loop"<<endl;
+    V new_val;
+    rhs.find(key, new_val);
+    cout<<"Find termination"<<endl;
+    this->insert(key, new_val);
+    cout<<"Insert termination"<<endl;
+    print();
+    cout<<"Print Termination"<<endl;
+    cout<<"Constructor loop termination"<<endl;
+  }
+
+  return *this;
+}

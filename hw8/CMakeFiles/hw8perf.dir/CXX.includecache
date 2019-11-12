@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/Documents/CPSC223/hw8/bst_collection.h
+vector
+-
+iostream
+-
+collection.h
+/home/student/Documents/CPSC223/hw8/collection.h
+
+/home/student/Documents/CPSC223/hw8/collection.h
+vector
+-
+
+/home/student/Documents/CPSC223/hw8/hw8_perf.cpp
+iostream
+-
+bst_collection.h
+/home/student/Documents/CPSC223/hw8/bst_collection.h
+test_driver.h
+/home/student/Documents/CPSC223/hw8/test_driver.h
+
+/home/student/Documents/CPSC223/hw8/test_driver.h
+string
+-
+iostream
+-
+fstream
+-
+chrono
+-
+collection.h
+/home/student/Documents/CPSC223/hw8/collection.h
+
