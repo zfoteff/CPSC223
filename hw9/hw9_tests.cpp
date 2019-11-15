@@ -89,23 +89,29 @@ TEST(BasicCollectionTest, InsertAndFind)
   ASSERT_EQ(true, c.find("d", v));
 }
 
-/*
+
 TEST(BasicCollectionTest, RemoveElems)
 {
   BSTCollection<string, double> c;
-  c.insert("a", 10.0);
   c.insert("b", 20.0);
+  c.insert("a", 10.0);
   c.insert("c", 30.0);
+  ASSERT_EQ(3, c.size());
+  c.print();
   double v;
   c.remove("a");
+  c.print();
   ASSERT_EQ(false, c.find("a", v));
+  ASSERT_EQ(2, c.size());
   c.remove("b");
+  c.print();
   ASSERT_EQ(false, c.find("b", v));
+  ASSERT_EQ(1, c.size());
   c.remove("c");
   ASSERT_EQ(false, c.find("c", v));
-  ASSERT_EQ(c.size(), 0);
+  ASSERT_EQ(0, c.size());
 }
-*/
+
 
 TEST(BasicCollectionTest, GetKeys)
 {

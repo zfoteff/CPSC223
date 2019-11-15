@@ -56,6 +56,9 @@ public:
   //  return the height of the Tree
   int height() const;
 
+  //  print the keys in the Tree
+  void print() const;
+
 private:
 
   //  BST node structure
@@ -89,10 +92,7 @@ private:
   int height (const Node* subtree_root) const;
 
   //  remove a node from the Tree
-  void remove(const K& key, Node* subtree_root);
-
-  //  print the keys in the Tree
-  void print() const;
+  Node* remove(const K& key, Node* subtree_root);
 };
 
 
@@ -207,7 +207,8 @@ int BSTCollection<K, V>::height(const Node* subtree_root) const
 }
 
 template <typename K, typename V>
-void BSTCollection<K, V>::remove(const K& key, Node* subtree_root)
+typename BSTCollection<K, V>::Node*
+BSTCollection<K, V>::remove(const K& key, Node* subtree_root)
 {
   if (subtree_root && key < subtree_root->key)
     subtree_root->left = remove(key, subtree_root->left);
@@ -229,7 +230,7 @@ void BSTCollection<K, V>::remove(const K& key, Node* subtree_root)
     else if (subtree_root->left != nullptr && subtree_root->right == nullptr)
     {
       K key = subtree_root->left->key;
-      V value subtree_root->left->key;
+      V value = subtree_root->left->value;
       delete subtree_root->left;
       subtree_root->left == nullptr;
       collection_size--;
@@ -237,7 +238,20 @@ void BSTCollection<K, V>::remove(const K& key, Node* subtree_root)
 
     else if (subtree_root->left == nullptr && subtree_root->right != nullptr)
     {
-      dele
+      Node* cur = subtree_root;
+      K key;
+      V val;
+      subtree_root->right;
+      while(subtree_root->left != nullptr)
+        subtree_root = subtree_root->left;
+
+      key = subtree_root->key;
+      val = subtree_root->value;
+      delete subtree_root;
+      subtree_root = nullptr;
+      cur->key = key;
+      cur->value = val;
+      collection_size--;
     }
   }
 
@@ -294,7 +308,7 @@ void BSTCollection<K, V>::insert(const K& key, const V& val)
 }
 
 
-//  iterative solution for referance
+/*  iterative solution for referance
 template <typename K, typename V>
 void BSTCollection<K, V>::remove(const K& key)
 {
@@ -381,7 +395,7 @@ void BSTCollection<K, V>::remove(const K& key)
     }
   }
 }
-
+*/
 template <typename K, typename V>
 void BSTCollection<K, V>::remove(const K& key) { root = remove(key, root); }
 

@@ -8,7 +8,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 #create unit test executable
 add_executable(hw9test hw9_tests.cpp)
-target_link_libraries(hw8test ${GTEST_LIBRARIES} pthread)
+target_link_libraries(hw9test ${GTEST_LIBRARIES} pthread)
 
 #create performance add_executable
 add_executable(hw9perf hw9_perf.cpp)

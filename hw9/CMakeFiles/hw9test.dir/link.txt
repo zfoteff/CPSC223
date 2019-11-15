@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/hw9test.dir/hw9_tests.cpp.o  -o hw9test -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 
