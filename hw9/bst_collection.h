@@ -233,24 +233,39 @@ BSTCollection<K, V>::remove(const K& key, Node* subtree_root)
       V value = subtree_root->left->value;
       delete subtree_root->left;
       subtree_root->left == nullptr;
+      subtree_root->key = key;
+      subtree_root->value = value;
       collection_size--;
     }
 
+    //  if subtree root has a right child but not a left child
     else if (subtree_root->left == nullptr && subtree_root->right != nullptr)
+    {
+      K key = subtree_root->right->key;
+      V value = subtree_root->right->value;
+      delete subtree_root->right;
+      subtree_root->right = nullptr;
+      subtree_root->key = key;
+      subtree_root->value = value;
+      collection_size--;
+    }
+
+    //  if the subtree has two children
+    else if (subtree_root->left != nullptr && subtree_root->right != nullptr)
     {
       Node* cur = subtree_root;
       K key;
-      V val;
-      subtree_root->right;
-      while(subtree_root->left != nullptr)
-        subtree_root = subtree_root->left;
+      V value;
+      cur->right;
+      while(cur->left != nullptr)
+        cur = cur->left;
 
-      key = subtree_root->key;
-      val = subtree_root->value;
+      key = cur->key;
+      value = cur->value;
       delete subtree_root;
       subtree_root = nullptr;
-      cur->key = key;
-      cur->value = val;
+      subtree_root->key = key;
+      subtree_root->value = value;
       collection_size--;
     }
   }

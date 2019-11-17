@@ -97,14 +97,13 @@ TEST(BasicCollectionTest, RemoveElems)
   c.insert("a", 10.0);
   c.insert("c", 30.0);
   ASSERT_EQ(3, c.size());
-  c.print();
   double v;
   c.remove("a");
-  c.print();
   ASSERT_EQ(false, c.find("a", v));
   ASSERT_EQ(2, c.size());
+
+  cout<<"Here"<<endl;
   c.remove("b");
-  c.print();
   ASSERT_EQ(false, c.find("b", v));
   ASSERT_EQ(1, c.size());
   c.remove("c");
