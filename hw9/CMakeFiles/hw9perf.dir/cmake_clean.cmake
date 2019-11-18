@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/hw9perf.dir/hw9_perf.cpp.o"
-  "hw9perf.pdb"
   "hw9perf"
+  "hw9perf.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

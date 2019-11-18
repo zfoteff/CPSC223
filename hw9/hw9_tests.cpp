@@ -89,8 +89,96 @@ TEST(BasicCollectionTest, InsertAndFind)
   ASSERT_EQ(true, c.find("d", v));
 }
 
+TEST(BasicCollectionTest, RemoveRoot)
+{
+  BSTCollection<string, double> c;
+  c.insert("a", 10.0);
+  double v;
+  ASSERT_EQ(1, c.size());
+  ASSERT_EQ(true, c.find("a", v));
 
-TEST(BasicCollectionTest, RemoveElems)
+  c.remove("a");
+  ASSERT_EQ(0, c.size());
+  ASSERT_EQ(false, c.find("a", v));
+}
+
+TEST(BasicCollectionTest, RemoveOneLeftChild)
+{
+  BSTCollection<string, double> c;
+  c.insert("b", 20.0);
+  c.insert("c", 30.0);
+  double v;
+  ASSERT_EQ(2, c.size());
+
+  c.remove("c");
+  ASSERT_EQ(true, c.find("b", v));
+  ASSERT_EQ(false, c.find("c", v));
+  ASSERT_EQ(1, c.size());
+}
+
+TEST(BasicCollectionTest, RemoveOneRightChild)
+{
+  BSTCollection<string, double> c;
+  c.insert("b", 20.0);
+  c.insert("a", 10.0);
+  double v;
+
+  ASSERT_EQ(2, c.size());
+
+  c.remove("a");
+  ASSERT_EQ(true, c.find("b", v));
+  ASSERT_EQ(false, c.find("a", v));
+}
+
+TEST(BasicCollectionTest, RemoveLeftChildWithChildren)
+{
+  /*
+                   d
+                 /
+                b
+              /   \
+            a      c
+      Illistration of tree: element b will be removed
+  */
+
+  BSTCollection<string, double> c;
+  c.insert("d", 40.0);
+  c.insert("b", 20.0);
+  c.insert("a", 10.0);
+  c.insert("c", 30.0);
+  double v;
+
+  c.remove("b");
+  ASSERT_EQ(true, c.find("a", v));
+  ASSERT_EQ(true, c.find("c", v));
+  ASSERT_EQ(true, c.find("d", v));
+}
+
+TEST(BasicCollectionTest, RemoveRightChildWithChildren)
+{
+  /*
+              a
+               \
+                c
+              /   \
+            b      d
+      Illistration of tree: element c will be removed
+  */
+
+  BSTCollection<string, double> c;
+  c.insert("a", 10.0);
+  c.insert("c", 30.0);
+  c.insert("b", 20.0);
+  c.insert("d", 40.0);
+  double v;
+
+  c.remove("c");
+  ASSERT_EQ(true, c.find("a", v));
+  ASSERT_EQ(true, c.find("b", v));
+  ASSERT_EQ(true, c.find("d", v));
+}
+
+TEST(BasicCollectionTest, RemoveTwoChildren)
 {
   BSTCollection<string, double> c;
   c.insert("b", 20.0);
@@ -98,17 +186,18 @@ TEST(BasicCollectionTest, RemoveElems)
   c.insert("c", 30.0);
   ASSERT_EQ(3, c.size());
   double v;
-  c.remove("a");
-  ASSERT_EQ(false, c.find("a", v));
-  ASSERT_EQ(2, c.size());
 
-  cout<<"Here"<<endl;
+  c.remove("a");
+  ASSERT_EQ(2, c.size());
+  ASSERT_EQ(false, c.find("a", v));
+
   c.remove("b");
-  ASSERT_EQ(false, c.find("b", v));
   ASSERT_EQ(1, c.size());
+  ASSERT_EQ(false, c.find("b", v));
+
   c.remove("c");
-  ASSERT_EQ(false, c.find("c", v));
   ASSERT_EQ(0, c.size());
+  ASSERT_EQ(false, c.find("c", v));
 }
 
 

@@ -221,52 +221,54 @@ BSTCollection<K, V>::remove(const K& key, Node* subtree_root)
     //  if subtree_root has no children
     if (subtree_root->left == nullptr && subtree_root->right == nullptr)
     {
-      delete subtree_root;
-      subtree_root == nullptr;
+      subtree_root = nullptr;
       collection_size--;
     }
 
     //  if subtree has a left child but no right child
     else if (subtree_root->left != nullptr && subtree_root->right == nullptr)
     {
-      K key = subtree_root->left->key;
-      V value = subtree_root->left->value;
-      delete subtree_root->left;
-      subtree_root->left == nullptr;
-      subtree_root->key = key;
-      subtree_root->value = value;
+      K k = subtree_root->left->key;
+      V v = subtree_root->left->value;
+      Node* new_left = subtree_root->left->left;
+      remove(key, subtree_root->left);
+      subtree_root->key = k;
+      subtree_root->value = v;
+      subtree_root->left = new_left;
       collection_size--;
+      return subtree_root;
     }
 
     //  if subtree root has a right child but not a left child
     else if (subtree_root->left == nullptr && subtree_root->right != nullptr)
     {
-      K key = subtree_root->right->key;
-      V value = subtree_root->right->value;
-      delete subtree_root->right;
-      subtree_root->right = nullptr;
-      subtree_root->key = key;
-      subtree_root->value = value;
+      K k = subtree_root->right->key;
+      V v = subtree_root->right->value;
+      Node* new_right = subtree_root->right->right;
+      remove(key, subtree_root->right);
+      subtree_root->key = k;
+      subtree_root->value = v;
+      subtree_root->right = new_right;
       collection_size--;
+      return subtree_root;
     }
 
     //  if the subtree has two children
     else if (subtree_root->left != nullptr && subtree_root->right != nullptr)
     {
-      Node* cur = subtree_root;
-      K key;
-      V value;
-      cur->right;
+      Node* cur = new Node;
+      cur = subtree_root;
       while(cur->left != nullptr)
         cur = cur->left;
 
-      key = cur->key;
-      value = cur->value;
-      delete subtree_root;
-      subtree_root = nullptr;
-      subtree_root->key = key;
-      subtree_root->value = value;
+      K k = cur->key;
+      V v = cur->value;
+      remove(key, cur);
+      cur = nullptr;
+      subtree_root->key = k;
+      subtree_root->value = v;
       collection_size--;
+      return subtree_root;
     }
   }
 
@@ -323,94 +325,6 @@ void BSTCollection<K, V>::insert(const K& key, const V& val)
 }
 
 
-/*  iterative solution for referance
-template <typename K, typename V>
-void BSTCollection<K, V>::remove(const K& key)
-{
-  std::vector<K> ks;
-  key(root, ks);
-  V val;
-
-  //  if key not in collection
-  if (!find(k, val))
-    return;
-
-  //  if tree is empty
-  if (root == nullptr)
-    return;
-
-  Node* cur = root;
-  Node* parent = nullptr;
-  //  Start iteration loop
-  while (cur != nullptr)
-  {
-    parent = cur;
-
-    if (key < cur->key)
-      cur = cur->left;
-
-    else if (key > cur->key)
-      cur =cur->right;
-
-    //  Found value
-    else if (cur->key == key)
-    {
-      //  if cur is a leaf node
-      if (cur->left == nullptr && cur->right == nullptr)
-      {
-        delete cur;
-        cur = nullptr;
-        collection_size--;
-        return;
-      }
-
-      //  if cur has one left child
-      if (cur->left != nullptr && cur->right == nulltr)
-      {
-          K key = cur->left->key;
-          V value cur->left->value;
-          delete cur->left;
-          cur->left = nullptr;
-          cur->key = key;
-          cur->value = value
-          collection_size--;
-          return;
-      }
-
-      //  if cur has one right child
-      if (cur->left != nullptr && cur->right == nulltr)
-      {
-          K key = cur->right->key;
-          V value cur->right->value;
-          delete cur->right;
-          cur->right = nullptr;
-          cur->key = key;
-          cur->value = value
-          collection_size--;
-          return;
-      }
-
-      //  if cur has two children
-      if (cur->left != nullptr && cur->right != nullptr)
-      {
-        K key;
-        V value;
-        cur = cur->right;
-        //  find in order successor
-        while(cur->left != nullptr;)
-          cur = cur->left;
-
-        key = cur->key;
-        value = cur->value;
-        delete cur;
-        cur = nullptr;
-        parent->key = key;
-        parent->value = value;
-      }
-    }
-  }
-}
-*/
 template <typename K, typename V>
 void BSTCollection<K, V>::remove(const K& key) { root = remove(key, root); }
 

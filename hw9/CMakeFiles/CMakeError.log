@@ -49,3 +49,43 @@ make[1]: Leaving directory '/home/student/Documents/CPSC223/hw9/CMakeFiles/CMake
 make: *** [Makefile:121: cmTC_df0c4/fast] Error 2
 
 
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/student/Documents/CPSC223/hw9/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_1936d/fast && /usr/bin/make -f CMakeFiles/cmTC_1936d.dir/build.make CMakeFiles/cmTC_1936d.dir/build
+make[1]: Entering directory '/home/student/Documents/CPSC223/hw9/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1936d.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_1936d.dir/src.c.o   -c /home/student/Documents/CPSC223/hw9/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_1936d
+/snap/clion/92/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1936d.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_1936d.dir/src.c.o  -o cmTC_1936d 
+/usr/bin/ld: CMakeFiles/cmTC_1936d.dir/src.c.o: in function `main':
+src.c:(.text+0x3e): undefined reference to `pthread_create'
+/usr/bin/ld: src.c:(.text+0x4a): undefined reference to `pthread_detach'
+/usr/bin/ld: src.c:(.text+0x5b): undefined reference to `pthread_join'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_1936d.dir/build.make:87: cmTC_1936d] Error 1
+make[1]: Leaving directory '/home/student/Documents/CPSC223/hw9/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_1936d/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+

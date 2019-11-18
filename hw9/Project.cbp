@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Project"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hw9test">
+				<Option output="/home/student/Documents/CPSC223/hw9/hw9test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 hw9test"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hw9test/fast">
+				<Option output="/home/student/Documents/CPSC223/hw9/hw9test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 hw9test/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hw9perf">
+				<Option output="/home/student/Documents/CPSC223/hw9/hw9perf" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 hw9perf"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hw9perf/fast">
+				<Option output="/home/student/Documents/CPSC223/hw9/hw9perf" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/student/Documents/CPSC223/hw9"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 hw9perf/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/student/Documents/CPSC223/hw9/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/student/Documents/CPSC223/hw9/hw9_perf.cpp">
+			<Option target="hw9perf"/>
+		</Unit>
+		<Unit filename="/home/student/Documents/CPSC223/hw9/hw9_tests.cpp">
+			<Option target="hw9test"/>
+		</Unit>
+		<Unit filename="/home/student/Documents/CPSC223/hw9/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
