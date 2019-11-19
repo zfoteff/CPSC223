@@ -62,9 +62,9 @@ void TestDriver::print_details(std::string test, int total, int times) const
 {
   using namespace std;
 
-  cout<<" " << test << "Calls: " << total << endl;
-  cout<<" " << test << "Time: " << times << "microseconds" << endl;
-  cout<<" " << test << "Average: " << ((1.0 * times) / total) << "microseconds"
+  cout<<" " << test << " Calls: " << total << endl;
+  cout<<" " << test << " Time: " << times << "microseconds" << endl;
+  cout<<" " << test << " Average: " << ((1.0 * times) / total) << "microseconds"
       << endl << endl;
 }
 
@@ -88,6 +88,5 @@ int TestDriver::timed_sort(std::fstream& in_file)
   int duration = time.count();
   return duration;
 }
-
 
 #endif

@@ -1,23 +1,28 @@
 #ifndef COCKTAILSORT_H
 #define COCKTAILSORT_H
 
-class CocktailSort : public SortingAlgoritm
+#include <iostream>
+#include "sorting_algorithm.h"
+
+class CocktailSort : public SortingAlgorithm
 {
  public:
+   CocktailSort();
 
- CocktailSort();
+   CocktailSort(const int& length);
 
- void insert(const int& number);
+   void insert(const int& number);
 
- void sort(std::vector<int> numbers_list);
+   void sort(std::vector<int>& numbers_list);
 
- void printOriginalArray(int arr[], int len);
-
- void cocktailSort(int arr[], int len);
+  void print();
 
  private:
-  int len = 0
-  int arr[len];
+   int len;
+   int* arr;
+
+   void cocktailSort(int arr[], int len);
+   void swap(int* numHigh, int* numLow);
 };
 
 #endif

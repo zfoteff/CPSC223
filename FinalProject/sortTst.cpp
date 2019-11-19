@@ -1,16 +1,22 @@
 #include <iostream>
+#include <vector>
 #include "cocktailSort.h"
 #include "cocktailSort.cpp"
+#include "sorting_algorithm.h"
 using namespace std;
 
 int main()
 {
- CocktailSort c;
- int len = 9;
- int arr[len] = {3, 6, 5, 4, 1, 2, 7, 8, 9};
- c.printOriginalArray(arr, len);
- c.cocktailSort(arr, len);
- c.printOriginalArray(arr, len);
- 
+  vector<int> num_list;
+
+  CocktailSort* c = new CocktailSort(10);
+
+  for (int i = 10; i > 0; --i)
+    c->insert(i);
+
+  c->print();
+  c->sort(num_list);
+  c->print();
+
  return 0;
 }

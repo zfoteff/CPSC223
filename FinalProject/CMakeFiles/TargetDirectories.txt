@@ -1,0 +1,3 @@
+/home/student/Documents/CPSC223/FinalProject/CMakeFiles/rebuild_cache.dir
+/home/student/Documents/CPSC223/FinalProject/CMakeFiles/testperf.dir
+/home/student/Documents/CPSC223/FinalProject/CMakeFiles/edit_cache.dir

@@ -10,5 +10,8 @@ public:
   virtual void insert(const int& number) = 0;
 
   //  sort the keys in the algorthm and returns them in ascending order
-  virtual void sort(std::vector<int> numbers_list) = 0;
-}
+  virtual void sort(std::vector<int>& numbers_list) = 0;
+};
+
+
+#endif
