@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/student/Documents/CPSC223/FinalProject/cocktailSort.cpp
+iostream
+-
+vector
+-
+cocktailSort.h
+/home/student/Documents/CPSC223/FinalProject/cocktailSort.h
+sorting_algorithm.h
+/home/student/Documents/CPSC223/FinalProject/sorting_algorithm.h
+
+/home/student/Documents/CPSC223/FinalProject/cocktailSort.h
+iostream
+-
+sorting_algorithm.h
+/home/student/Documents/CPSC223/FinalProject/sorting_algorithm.h
+
+/home/student/Documents/CPSC223/FinalProject/sorting_algorithm.h
+vector
+-
+
+/home/student/Documents/CPSC223/FinalProject/tests.cpp
+iostream
+-
+string
+-
+algorithm
+-
+gtest/gtest.h
+-
+cocktailSort.h
+/home/student/Documents/CPSC223/FinalProject/cocktailSort.h
+cocktailSort.cpp
+/home/student/Documents/CPSC223/FinalProject/cocktailSort.cpp
+

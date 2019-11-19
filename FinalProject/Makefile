@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named unittest
+
+# Build rule for target.
+unittest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 unittest
+.PHONY : unittest
+
+# fast build rule for target.
+unittest/fast:
+	$(MAKE) -f CMakeFiles/unittest.dir/build.make CMakeFiles/unittest.dir/build
+.PHONY : unittest/fast
+
+#=============================================================================
 # Target rules for targets named testperf
 
 # Build rule for target.
@@ -150,6 +163,33 @@ test_perf.cpp.s:
 	$(MAKE) -f CMakeFiles/testperf.dir/build.make CMakeFiles/testperf.dir/test_perf.cpp.s
 .PHONY : test_perf.cpp.s
 
+tests.o: tests.cpp.o
+
+.PHONY : tests.o
+
+# target to build an object file
+tests.cpp.o:
+	$(MAKE) -f CMakeFiles/unittest.dir/build.make CMakeFiles/unittest.dir/tests.cpp.o
+.PHONY : tests.cpp.o
+
+tests.i: tests.cpp.i
+
+.PHONY : tests.i
+
+# target to preprocess a source file
+tests.cpp.i:
+	$(MAKE) -f CMakeFiles/unittest.dir/build.make CMakeFiles/unittest.dir/tests.cpp.i
+.PHONY : tests.cpp.i
+
+tests.s: tests.cpp.s
+
+.PHONY : tests.s
+
+# target to generate assembly for a file
+tests.cpp.s:
+	$(MAKE) -f CMakeFiles/unittest.dir/build.make CMakeFiles/unittest.dir/tests.cpp.s
+.PHONY : tests.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -157,11 +197,15 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... testperf"
+	@echo "... unittest"
 	@echo "... edit_cache"
+	@echo "... testperf"
 	@echo "... test_perf.o"
 	@echo "... test_perf.i"
 	@echo "... test_perf.s"
+	@echo "... tests.o"
+	@echo "... tests.i"
+	@echo "... tests.s"
 .PHONY : help
 
 
