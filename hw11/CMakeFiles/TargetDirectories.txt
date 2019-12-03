@@ -1,0 +1,4 @@
+/home/student/Documents/CPSC223/hw11/CMakeFiles/edit_cache.dir
+/home/student/Documents/CPSC223/hw11/CMakeFiles/hw11test.dir
+/home/student/Documents/CPSC223/hw11/CMakeFiles/rebuild_cache.dir
+/home/student/Documents/CPSC223/hw11/CMakeFiles/hw11perf.dir

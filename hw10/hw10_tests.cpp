@@ -66,6 +66,7 @@ TEST(BasicCollectionTest, InsertAndFind)
   double v;
   ASSERT_EQ(c.find("b", v), false);
   c.insert("b", 20.0);
+  cout<<"Here"<<endl;
   ASSERT_EQ(c.find("b", v), true);
   ASSERT_EQ(v, 20.0);
   ASSERT_EQ(c.find("a", v), false);
