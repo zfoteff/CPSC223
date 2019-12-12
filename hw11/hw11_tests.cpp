@@ -106,7 +106,9 @@ TEST(BasicCollectionTest, RemoveOneLeftChild)
   double v;
   ASSERT_EQ(2, c.size());
 
+  cout<<"Remove Call"<<endl;
   c.remove("c");
+  cout<<"End of remove"<<endl;
   ASSERT_EQ(true, c.find("b", v));
   ASSERT_EQ(false, c.find("c", v));
   ASSERT_EQ(1, c.size());
