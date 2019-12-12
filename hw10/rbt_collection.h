@@ -247,7 +247,6 @@ typename RBTCollection<K, V>::Node* RBTCollection<K, V>::rotate_right(Node* k2)
   return new_parent;
 }
 
-//  insert helper function
 template <typename K, typename V>
 typename RBTCollection<K, V>::Node*
 RBTCollection<K, V>::insert(const K& key, const V& val, Node* subtree_root)
@@ -256,26 +255,27 @@ RBTCollection<K, V>::insert(const K& key, const V& val, Node* subtree_root)
   {
     Node* new_node = new Node;
     new_node->key = key;
-    new_node->key = val;
+    new_node->value = val;
     new_node->is_black = false;
     new_node->left = nullptr;
     new_node->right = nullptr;
+    new_node->is_dbl_black_left = false;
+    new_node->is_dbl_black_right = false;
     subtree_root = new_node;
   }
 
   else
   {
     if (key < subtree_root->key)
-      subtree_root->left = insert(k, v, subtree_root->left);
+      subtree_root->left = insert(key, val, subtree_root->left);
+
     else
-      subtree_root->right = insert(k, v, subtree_root->right);
+      subtree_root->right = insert(key, val, subtree_root->right);
   }
 
   if (subtree_root->is_black)
   {
-    //  two red children
-    if ((subtree_root->left && !subtree_root->left->is_black) &&
-        (subtree_root->right && !subtree_root->right->is_black))
+    if ((subtree_root->left && !subtree_root->left->is_black) && (subtree_root->right && !subtree_root->right->is_black))
     {
       if (subtree_root->left->left && !subtree_root->left->left->is_black)
       {
@@ -308,26 +308,31 @@ RBTCollection<K, V>::insert(const K& key, const V& val, Node* subtree_root)
 
     else
     {
-      if ((subtree_root->left && !subtree_root->left->is_black) &&
-          (subtree_root->left->left && !subtree_root->left->left->is_black))
+      if ((subtree_root->left && !subtree_root->left->is_black) && (subtree_root->left->left && !subtree_root->left->left->is_black))
       {
         subtree_root = rotate_right(subtree_root);
         subtree_root->is_black = true;
         subtree_root->right->is_black = false;
       }
 
-      else if ((subtree_root->right && !subtree_root->left->is_black) &&
-               (subtree_root->right->right && !subtree_root->right->right->is_black))
+      else if ((subtree_root->right && !subtree_root->right->is_black) && (subtree_root->right->right && !subtree_root->right->right->is_black))
       {
         subtree_root = rotate_left(subtree_root);
         subtree_root->is_black = true;
-        subtree_root->left->is_black = true;
+        subtree_root->left->is_black = false;
       }
 
-      else if ((subtree_root->left && !subtree_root->left->is_black) &&
-               (subtree_root->left->right && !subtree_root->left->right->is_black))
+      else if ((subtree_root->left && !subtree_root->left->is_black) && (subtree_root->left->right && !subtree_root->left->right->is_black))
       {
         subtree_root->left = rotate_left(subtree_root->left);
+        subtree_root = rotate_right(subtree_root);
+        subtree_root->is_black = true;
+        subtree_root->right->is_black = false;
+      }
+
+      else if ((subtree_root->right && !subtree_root->right->is_black) && (subtree_root->right->left && !subtree_root->right->left->is_black))
+      {
+        subtree_root->right = rotate_right(subtree_root->right);
         subtree_root = rotate_left(subtree_root);
         subtree_root->is_black = true;
         subtree_root->left->is_black = false;
@@ -411,173 +416,6 @@ void RBTCollection<K, V>::remove(const K& key)
 
   delete root_parent;
 }
-
-
-//  helper to perform a single reblance step for a red-black Tree
-template<typename K, typename V>
-typename RBTCollection<K, V>::Node*
-remove_color_adjust(Node* subtree_root)
-{
-  //  subtree_root = grandparent (g)
-  Node* g = subtree_root;
-  Node* gl = g->left;
-  Node* gr = g->right;
-  //  parent is either gl or gr
-  Node* p = nullptr;
-  bool left_parent = false;
-
-  if (gl && (gl->is_dbl_black_left || gl->is_dbl_black_right))
-  {
-    p = gl;
-    left_parent = true;
-  }
-
-  else if (gr && (gr->is_dbl_black_left || gl->is_dbl_black_right))
-    p = gr;
-
-  // no double black nodes in subtree
-  else
-    return subtree_root;
-
-  //  Case 1: parent's left child is a double black node
-  if (p->is_dbl_black_left)
-  {
-    //  sibling is red
-    if (!p->right->is_black)
-    {
-      p = rotate_left(p);
-      p->is_black = true;
-      p->left->is_black = false;
-      remove_color_adjust(p);
-    }
-
-    //  sibling is black
-    else
-    {
-      //  case 1: sibling's outside child is red / both children are red
-      if ((!p->right->right->is_black && !p->right->left->is_black) || !p->right->right->is_black)
-      {
-        p->is_dbl_black_left = false;
-        Node* temp = nullptr;
-        temp = p->right->left;
-        p = rotate_left(p);
-        p->right->is_black = true;
-        p->left->right = temp;
-        return p;
-      }
-
-      //  case 2: sibling's inside child is red
-      else if (!p->right->left->is_black)
-      {
-        p->is_dbl_black_left = false;
-        p->right = rotate_right(p->right);
-        p = rotate_left(p);
-        p->is_black = true;
-        return p;
-      }
-
-      //  case 3: parent is red
-      else if (!p->is_black)
-      {
-        p->is_dbl_black_left = false;
-        p->is_black = true;
-        p->right->is_black = false;
-        return p;
-      }
-
-      //  case 4: parent is black
-      else if (p->is_black)
-      {
-        p->is_dbl_black_left = false;
-
-        //  parent is left child of grandparent
-        if (left_parent)
-          subtree_root->is_dbl_black_left = true;
-
-        //  parent is right child of grandparent
-        else
-          subtree_root->is_dbl_black_right = true;
-
-        p->right->is_black = false;
-        return p;
-      }
-    }
-  }
-
-  //  Case 2: parent's right child is a double black node
-  if (p->is_dbl_black_right)
-  {
-    //  sibling is red
-    if (!p->left->is_black)
-    {
-      p = rotate_right(p);
-      p->is_black = true;
-      p->right->is_black = false;
-      remove_color_adjust(p);
-    }
-
-    //  sibling is black
-    else
-    {
-      //  case 1: sibling's outside child is red / both children are red
-      if ((!p->left->left->is_black && !p->left->right->is_black) || !p->left->left->is_black)
-      {
-        Node* temp = nullptr;
-        temp = p->left->right;
-        p->is_dbl_black_right = false;
-        p = rotate_right(p);
-        p->left->is_left = false;
-        p->right->left = temp;
-        return p;
-      }
-
-      //  case 2: sibling's inside child is red
-      else if (!p->left->right->is_black)
-      {
-        p->is_dbl_black_right = false;
-        p->left = rotate_left(p->left);
-        p = rotate_right(p);
-        p->is_black = true;
-        return true;
-      }
-
-      //  case 3: parent is red
-      else if (!p->is_black)
-      {
-        p->is_dbl_black_right = false;
-        p->is_black = true;
-        p->left->is_black = false;
-        return p;
-      }
-
-      //  case 4: parent is black
-      else if (p->is_black)
-      {
-        p->is_dbl_black_right = false;
-
-        //  parent is left child of grandparent
-        if (left_parent)
-          subtree_root->is_dbl_black_left = true;
-
-        //  parent is right child of grandparent
-        else
-          subtree_root->is_dbl_black_right = true;
-
-        p->left->is_black = false;
-        return p;
-      }
-    }
-  }
-
-  //  connect up the subtree_root to the parent
-  if (left_parent)
-    subtree_root->left = p;
-  else
-    subtree_root->right = p;
-
-  return subtree_root;
-}
-
 
 /*
   Collection Functions
