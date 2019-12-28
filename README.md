@@ -31,7 +31,7 @@ The algorithm is used to
 Implemented 3 sorting algorithms on a linked list data structure
 1. Insertion Sort
 1. Merge Sort
-1. Quick Sort
+1. Quick Sort  
 Goal of assignment was to understand the steps of sorting algoritms and compare their complexites
 
 ## HW7: Hash Table Collection
